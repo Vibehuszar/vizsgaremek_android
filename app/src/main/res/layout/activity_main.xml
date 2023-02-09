@@ -37,6 +37,7 @@
                 android:text="Bejelentkezés"
                 android:textAllCaps="false"
                 android:textSize="16dp"
+                android:id="@+id/loginButton"
                 />
 
             <com.google.android.material.button.MaterialButton
@@ -47,6 +48,7 @@
                 android:text="Regisztráció"
                 android:textAllCaps="false"
                 android:textSize="16dp"
+                android:id="@+id/registrationButton"
                 />
 
         </LinearLayout>
