@@ -14,12 +14,13 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="10dp"
+        app:cardElevation="0dp"
         app:cardCornerRadius="20dp"
         android:layout_margin="10dp"
         app:cardMaxElevation="12dp"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
+        app:cardBackgroundColor="@color/midnight_purple"
         >
 
         <LinearLayout
@@ -41,7 +42,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email"/>
+                    android:hint="Email"
+                    android:textSize="16dp"/>
 
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -60,8 +62,27 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                    android:textSize="16dp"
                     android:hint="Password" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundColor="@color/gray"
+                app:boxCornerRadiusTopStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusBottomEnd="20dp"
+                android:layout_marginBottom="20dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:hint="Repassword" />
 
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -70,7 +91,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:cornerRadius="10dp"/>
+                app:cornerRadius="10dp"
+                android:text="Regisztráció"
+                android:textAllCaps="false"
+                android:textSize="16dp"
+                />
 
         </LinearLayout>
 
