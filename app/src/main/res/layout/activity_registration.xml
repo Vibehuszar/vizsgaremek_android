@@ -82,7 +82,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Password"
+                    android:hint="Jelszó"
                     android:inputType="textPassword"
                     android:textSize="16dp" />
 
@@ -105,7 +105,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Repassword"
+                    android:hint="Jelszó újra"
                     android:inputType="textPassword"
                     android:textSize="16dp" />
 

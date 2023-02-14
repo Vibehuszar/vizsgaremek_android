@@ -9,6 +9,9 @@
     android:gravity="center"
     android:background="@color/midnight_purple">
 
+
+
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,6 +30,13 @@
             android:layout_margin="20dp"
             android:orientation="vertical">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/gorillago"
+
+
+                />
 
 
             <com.google.android.material.button.MaterialButton
