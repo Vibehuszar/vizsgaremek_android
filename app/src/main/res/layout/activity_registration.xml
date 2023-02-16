@@ -60,7 +60,8 @@
                     android:layout_height="wrap_content"
                     android:hint="Email"
                     android:maxLines="1"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:id="@+id/inputEmail"/>
 
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -84,7 +85,8 @@
                     android:layout_height="wrap_content"
                     android:hint="Jelszó"
                     android:inputType="textPassword"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:id="@+id/inputPassword"/>
 
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -107,7 +109,8 @@
                     android:layout_height="wrap_content"
                     android:hint="Jelszó újra"
                     android:inputType="textPassword"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:id="@+id/inputRePassword"/>
 
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -119,7 +122,8 @@
                 android:text="Regisztráció"
                 android:textAllCaps="false"
                 android:textSize="16dp"
-                app:cornerRadius="10dp" />
+                app:cornerRadius="10dp"
+                android:id="@+id/registrationButton"/>
 
         </LinearLayout>
 
