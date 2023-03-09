@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login"
-
-    android:background="@color/midnight_purple">
+    tools:context=".LoginActivity"
+    android:background="@drawable/bgcolor">
 
 
     <com.google.android.material.button.MaterialButton
@@ -19,7 +18,7 @@
         android:textAllCaps="false"
         android:textSize="16dp"
         android:id="@+id/buttonBack"
-        android:backgroundTint="@color/midnight_purple"
+        android:backgroundTint="@android:color/transparent"
         android:textColorHighlight="@color/white"
         />
 
@@ -31,7 +30,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        app:cardBackgroundColor="@color/midnight_purple"
+        app:cardBackgroundColor="@android:color/transparent"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="12dp"
@@ -62,7 +61,9 @@
                     android:layout_height="wrap_content"
                     android:hint="Email"
                     android:textSize="16dp"
-                    android:maxLines="1"/>
+                    android:maxLines="1"
+                    android:inputType="textEmailAddress"
+                    android:id="@+id/inputLogin"/>
 
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -87,7 +88,8 @@
                     android:layout_height="wrap_content"
                     android:hint="Jelszó"
                     android:textSize="16dp"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword"
+                    android:id="@+id/inputLoginPassword"/>
 
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -100,7 +102,11 @@
                 android:text="Bejelentkezés"
                 android:textAllCaps="false"
                 android:textSize="16dp"
-                app:cornerRadius="10dp" />
+                app:cornerRadius="10dp"
+                android:id="@+id/buttonLogin"
+                android:backgroundTint="@android:color/transparent"
+                app:strokeColor="@color/white"
+                app:strokeWidth="1sp"/>
 
 
         </LinearLayout>
