@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 
-public class Registration extends AppCompatActivity {
+public class RegistrationActivity extends AppCompatActivity {
 
 
     private MaterialButton buttonBack;
@@ -37,7 +37,7 @@ public class Registration extends AppCompatActivity {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Registration.this, MainActivity.class));
+                startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
             }
         });
 
@@ -113,7 +113,7 @@ public class Registration extends AppCompatActivity {
                         break;
                 }
             }catch (IOException e){
-                Toast.makeText(Registration.this,
+                Toast.makeText(RegistrationActivity.this,
                         e.toString(), Toast.LENGTH_SHORT).show();
             }
             return response;
@@ -123,12 +123,11 @@ public class Registration extends AppCompatActivity {
             protected void onPostExecute(Response response) {
                 super.onPostExecute(response);
                 if (response==null|| response.getResponseCode() >= 400){
-                    Toast.makeText(Registration.this, "Hiba a Regisztráció során", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistrationActivity.this, "Hiba a Regisztráció során", Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(Registration.this, "Sikeres Regisztráció", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistrationActivity.this, "Sikeres Regisztráció", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
                 }
-                
             }
         }
-    
 }
