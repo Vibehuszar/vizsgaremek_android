@@ -3,7 +3,9 @@ package hu.petrik.gorillago_android;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -126,9 +128,12 @@ public class LoginActivity extends AppCompatActivity {
                 String tokenString = token.getToken();
                 Toast.makeText(LoginActivity.this,
                         tokenString, Toast.LENGTH_SHORT).show();
+                SharedPreferences sharedPreferences=getSharedPreferences("MyData", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor=sharedPreferences.edit();
+                editor.putString("name", tokenString);
+                editor.commit();
                 startActivity(new Intent(LoginActivity.this, GorillaGoActivity.class));
             }
-
         }
     }
 }

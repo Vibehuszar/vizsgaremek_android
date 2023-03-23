@@ -3,11 +3,14 @@ package hu.petrik.gorillago_android;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 public class LoadingScreen extends AppCompatActivity {
 
@@ -26,8 +29,17 @@ public class LoadingScreen extends AppCompatActivity {
 
     public void loadingStart(){
         new Handler().postDelayed(() -> {
-            Intent intent = new Intent(LoadingScreen.this, MainActivity.class);
-            startActivity(intent);
+            SharedPreferences sharedPreferences=getSharedPreferences("MyData", Context.MODE_PRIVATE);
+            String token = sharedPreferences.getString("name","");
+            //Toast.makeText(LoadingScreen.this,"SharedPreference adat:"+token,Toast.LENGTH_SHORT).show();
+            if (!token.equals("")){
+                startActivity(new Intent(LoadingScreen.this, GorillaGoActivity.class));
+            }
+            else{
+                Intent intent = new Intent(LoadingScreen.this, MainActivity.class);
+                startActivity(intent);
+            }
+
             finish();
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }, LOADING_TIME);
