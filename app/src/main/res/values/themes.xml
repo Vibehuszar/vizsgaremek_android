@@ -11,6 +11,20 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="EditTextHintColor">
+        <item name="android:textColorHint"> @color/white </item>
+        <item name="hintTextColor"> @color/white </item>
+    </style>
+    
+    <style name="Theme.GorillaGo_android.NoActionBarAndStatusBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 </resources>
