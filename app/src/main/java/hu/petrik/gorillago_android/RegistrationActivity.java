@@ -54,6 +54,7 @@ public class RegistrationActivity extends AppCompatActivity {
         String password = inputPassword.getText().toString().trim();
         String repassword = inputRePassword.getText().toString().trim();
 
+
         if (email.isEmpty() || password.isEmpty() || repassword.isEmpty()){
             Toast.makeText(this, "Minden mezőt ki kell tölteni", Toast.LENGTH_SHORT).show();
         }
@@ -67,7 +68,7 @@ public class RegistrationActivity extends AppCompatActivity {
             Toast.makeText(this, "A jelszónak legalább 8 karakternek kell lennie", Toast.LENGTH_SHORT).show();
         }
 
-        User user = new User(0, email, password, repassword);
+        User user = new User(0, email, password, repassword, "", "");
         Gson jsonConverter = new Gson();
         RequestTask task = new RequestTask(url, "POST", jsonConverter.toJson(user));
         task.execute();

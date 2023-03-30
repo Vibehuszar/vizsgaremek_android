@@ -20,6 +20,7 @@
             android:exported="false" />
         <activity
             android:name=".LoadingScreen"
+            android:theme="@style/Theme.GorillaGo_android.NoActionBarAndStatusBar"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
