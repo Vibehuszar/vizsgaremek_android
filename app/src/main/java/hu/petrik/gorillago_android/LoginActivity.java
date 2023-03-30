@@ -128,11 +128,12 @@ public class LoginActivity extends AppCompatActivity {
                 String tokenString = token.getToken();
                 Toast.makeText(LoginActivity.this,
                         tokenString, Toast.LENGTH_SHORT).show();
-                SharedPreferences sharedPreferences=getSharedPreferences("MyData", Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences=getSharedPreferences("MyPref", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor=sharedPreferences.edit();
-                editor.putString("name", tokenString);
+                editor.putString("token", tokenString);
                 editor.commit();
                 startActivity(new Intent(LoginActivity.this, GorillaGoActivity.class));
+                finish();
             }
         }
     }

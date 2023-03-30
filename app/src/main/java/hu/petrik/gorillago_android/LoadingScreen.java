@@ -19,18 +19,18 @@ public class LoadingScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        /*this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        actionBar.hide();*/
         setContentView(R.layout.activity_loading_screen);
         loadingStart();
     }
 
     public void loadingStart(){
         new Handler().postDelayed(() -> {
-            SharedPreferences sharedPreferences=getSharedPreferences("MyData", Context.MODE_PRIVATE);
-            String token = sharedPreferences.getString("name","");
+            SharedPreferences sharedPreferences=getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+            String token = sharedPreferences.getString("token","");
             //Toast.makeText(LoadingScreen.this,"SharedPreference adat:"+token,Toast.LENGTH_SHORT).show();
             if (!token.equals("")){
                 startActivity(new Intent(LoadingScreen.this, GorillaGoActivity.class));
