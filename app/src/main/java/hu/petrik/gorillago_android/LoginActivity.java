@@ -19,6 +19,9 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 
+import hu.petrik.gorillago_android.classes.Login;
+import hu.petrik.gorillago_android.classes.Token;
+
 public class LoginActivity extends AppCompatActivity {
 
     private MaterialButton buttonBack, buttonLogin;
@@ -126,12 +129,16 @@ public class LoginActivity extends AppCompatActivity {
                 Token token = converter.fromJson(
                         response.getContent(), Token.class);
                 String tokenString = token.getToken();
+                int userId = token.getId();
                 Toast.makeText(LoginActivity.this,
-                        tokenString, Toast.LENGTH_SHORT).show();
+                        String.valueOf(userId), Toast.LENGTH_SHORT).show();
                 SharedPreferences sharedPreferences=getSharedPreferences("MyPref", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor=sharedPreferences.edit();
                 editor.putString("token", tokenString);
+                editor.putInt("userId", userId);
                 editor.commit();
+
+
                 startActivity(new Intent(LoginActivity.this, GorillaGoActivity.class));
                 finish();
             }

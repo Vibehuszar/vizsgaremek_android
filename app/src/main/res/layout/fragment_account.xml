@@ -54,9 +54,10 @@
                     app:boxStrokeWidthFocused="0dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/inputStreet"
+                        android:id="@+id/editTextFullname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/white"
                         android:hint="Teljes név"
                         android:inputType="text"
                         android:maxLines="1"
@@ -80,9 +81,10 @@
                     app:boxStrokeWidthFocused="0dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/inputZip"
+                        android:id="@+id/editTextEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/white"
                         android:hint="Email cím"
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
@@ -91,77 +93,7 @@
 
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/buttonSaveAddress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:backgroundTint="@android:color/transparent"
-                    android:text="Mentés"
-                    android:textAllCaps="false"
-                    android:textSize="16dp"
-                    app:cornerRadius="10dp"
-                    app:strokeColor="@color/navbarpurple"
-                    app:strokeWidth="1sp" />
-
-                <TextView
-                    android:id="@+id/textViewAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Szállítási Adatok"
-                    android:textSize="30dp"
-                    android:textColor="@color/white"
-                    android:gravity="center_horizontal"/>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    app:boxBackgroundColor="@color/navbarpurple"
-                    style="@style/EditTextHintColor"
-                    app:boxCornerRadiusBottomEnd="20dp"
-                    app:boxCornerRadiusBottomStart="20dp"
-                    app:boxCornerRadiusTopEnd="20dp"
-                    app:boxCornerRadiusTopStart="20dp"
-                    app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/inputFullname"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Utca, házszám"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:textSize="16dp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    app:boxBackgroundColor="@color/navbarpurple"
-                    style="@style/EditTextHintColor"
-                    app:boxCornerRadiusBottomEnd="20dp"
-                    app:boxCornerRadiusBottomStart="20dp"
-                    app:boxCornerRadiusTopEnd="20dp"
-                    app:boxCornerRadiusTopStart="20dp"
-                    app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/inputEmail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Irányítószám"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:textSize="16dp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/buttonLogin"
+                    android:id="@+id/buttonSavePersonalInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
@@ -193,12 +125,15 @@
                     app:boxCornerRadiusTopEnd="20dp"
                     app:boxCornerRadiusTopStart="20dp"
                     app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp">
+                    app:boxStrokeWidthFocused="0dp"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/white">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/inputOldPassword"
+                        android:id="@+id/editTextOldPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/white"
                         android:hint="Meglévő jelszó"
                         android:inputType="textPassword"
                         android:maxLines="1"
@@ -217,12 +152,15 @@
                     app:boxCornerRadiusTopEnd="20dp"
                     app:boxCornerRadiusTopStart="20dp"
                     app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp">
+                    app:boxStrokeWidthFocused="0dp"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/white">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/inputNewPassword"
+                        android:id="@+id/editTextNewPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/white"
                         android:hint="Új jelszó"
                         android:inputType="textPassword"
                         android:maxLines="1"

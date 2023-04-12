@@ -16,6 +16,8 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 
+import hu.petrik.gorillago_android.classes.User;
+
 public class RegistrationActivity extends AppCompatActivity {
 
 

@@ -63,7 +63,8 @@
                     android:hint="Email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:textColor="@color/white"/>
 
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -81,7 +82,8 @@
                 app:boxCornerRadiusTopStart="20dp"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp"
-                app:passwordToggleEnabled="true">
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/white">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputLoginPassword"
@@ -89,7 +91,8 @@
                     android:layout_height="wrap_content"
                     android:hint="Jelszó"
                     android:inputType="textPassword"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:textColor="@color/white"/>
 
 
             </com.google.android.material.textfield.TextInputLayout>

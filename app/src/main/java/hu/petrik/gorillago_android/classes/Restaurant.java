@@ -1,4 +1,4 @@
-package hu.petrik.gorillago_android;
+package hu.petrik.gorillago_android.classes;
 
 public class Restaurant {
     private int id;
