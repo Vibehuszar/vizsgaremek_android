@@ -14,6 +14,6 @@
         android:icon="@drawable/account_circle"/>
     <item
         android:id="@+id/logout"
-        android:title="kilépés"
+        android:title="kijelentkezés"
         android:icon="@drawable/baseline_logout"/>
 </menu>

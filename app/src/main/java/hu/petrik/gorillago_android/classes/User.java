@@ -5,18 +5,20 @@ public class User {
     private String email;
     private String password;
     private String rePassword;
-    private String fullname;
-    private String address;
+    private String firstName;
+    private String lastName;
+    private int addressId;
 
-
-    public User(int id, String email, String password, String rePassword, String fullname, String address) {
+    public User(int id, String email, String password, String rePassword, String firstName, String lastName, int addressId) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.rePassword = rePassword;
-        this.fullname = fullname;
-        this.address = address;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.addressId = addressId;
     }
+
     public int getId() {
         return id;
     }
@@ -49,17 +51,27 @@ public class User {
         this.rePassword = rePassword;
     }
 
-    public String getAddress() {
-        return address;
-    }
-    public String getFullname() {
-        return fullname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
-    public void setAddress(String address) {
-        this.address = address;
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public int getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
     }
 }

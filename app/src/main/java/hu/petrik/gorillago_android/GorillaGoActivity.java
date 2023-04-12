@@ -17,6 +17,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -65,6 +66,9 @@ public class GorillaGoActivity extends AppCompatActivity {
         RequestTask task = new RequestTask(url, "GET");
         task.execute();
         init();
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getSupportActionBar().hide();
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
@@ -126,7 +130,7 @@ public class GorillaGoActivity extends AppCompatActivity {
                         editor.remove("token");
                         editor.remove("userId");
                         editor.commit();
-                        startActivity(new Intent(GorillaGoActivity.this, LoginActivity.class));
+                        startActivity(new Intent(GorillaGoActivity.this, MainActivity.class));
                         finish();
                     }
                 })

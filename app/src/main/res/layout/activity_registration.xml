@@ -8,19 +8,17 @@
     android:background="@drawable/bgcolor">
 
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|left"
-        app:cornerRadius="10dp"
-        android:drawableLeft="@drawable/baseline_arrowback"
-        android:textColor="@color/white"
-        android:textAllCaps="false"
-        android:textSize="16dp"
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/buttonBack"
-        android:backgroundTint="@android:color/transparent"
-        android:textColorHighlight="@color/white"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/transparent"
+        app:titleTextColor="@color/white"
+        app:navigationIcon="@drawable/baseline_arrowback"
+        app:contentInsetStart="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetRight="0dp"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -47,6 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
+                android:id="@+id/inputEmailLayout"
                 app:boxBackgroundColor="@color/navbarpurple"
                 style="@style/EditTextHintColor"
                 app:boxCornerRadiusBottomEnd="20dp"
@@ -54,7 +53,8 @@
                 app:boxCornerRadiusTopEnd="20dp"
                 app:boxCornerRadiusTopStart="20dp"
                 app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp">
+                app:boxStrokeWidthFocused="0dp"
+                app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -72,6 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
+                android:id="@+id/inputPasswordLayout"
                 app:boxBackgroundColor="@color/navbarpurple"
                 style="@style/EditTextHintColor"
                 app:boxCornerRadiusBottomEnd="20dp"
@@ -81,7 +82,8 @@
                 app:passwordToggleEnabled="true"
                 app:passwordToggleTint="@color/white"
                 app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp">
+                app:boxStrokeWidthFocused="0dp"
+                app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -91,14 +93,13 @@
                     android:textSize="16dp"
                     android:textColor="@color/white"
                     android:id="@+id/inputPassword"/>
-
-
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
+                android:id="@+id/inputRePasswordLayout"
                 app:boxBackgroundColor="@color/navbarpurple"
                 style="@style/EditTextHintColor"
                 app:boxCornerRadiusBottomEnd="20dp"
@@ -108,7 +109,8 @@
                 app:passwordToggleEnabled="true"
                 app:passwordToggleTint="@color/white"
                 app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp">
+                app:boxStrokeWidthFocused="0dp"
+                app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -134,7 +136,6 @@
                 android:backgroundTint="@android:color/transparent"
                 app:strokeColor="@color/navbarpurple"
                 app:strokeWidth="1sp"/>
-
         </LinearLayout>
 
 

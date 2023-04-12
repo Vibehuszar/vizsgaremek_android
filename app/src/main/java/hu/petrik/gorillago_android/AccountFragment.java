@@ -27,7 +27,7 @@ import hu.petrik.gorillago_android.classes.User;
 public class AccountFragment extends Fragment {
 
     TextView textViewAccount;
-    TextInputEditText editTextFullname, editTextEmail, editTextOldPassword, editTextNewPassword;
+    TextInputEditText editTextLastName, editTextFirstName, editTextEmail, editTextOldPassword, editTextNewPassword;
 
     MaterialButton buttonSavePersonalInfo;
     private String url = "http://10.0.2.2:3000/users";
@@ -51,11 +51,12 @@ public class AccountFragment extends Fragment {
     private void updatePersonalInfo(){
         SharedPreferences sharedPreferences= getActivity().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
         int userId = sharedPreferences.getInt("userId",0);
-        String fullname = editTextFullname.getText().toString().trim();
+        String lastName = editTextLastName.getText().toString().trim();
+        String firstName = editTextFirstName.getText().toString().trim();
         String email = editTextEmail.getText().toString().trim();
-        UpdateUser updateUser = new UpdateUser(fullname,email);
+        UpdateUser updateUser = new UpdateUser(lastName, firstName, email);
         Gson jsonConverter = new Gson();
-        RequestTask task = new RequestTask(url + "/" + userId, "PATCH", jsonConverter.toJson(updateUser));
+        RequestTask task = new RequestTask(url + "/" + userId, "PUT", jsonConverter.toJson(updateUser));
         task.execute();
         refreshPage();
         System.out.println(updateUser);
@@ -71,7 +72,8 @@ public class AccountFragment extends Fragment {
 
     public void init(View view){
         textViewAccount = view.findViewById(R.id.textViewAccount);
-        editTextFullname = view.findViewById(R.id.editTextFullname);
+        editTextLastName = view.findViewById(R.id.editTextLastName);
+        editTextFirstName = view.findViewById(R.id.editTextFirstName);
         editTextEmail = view.findViewById(R.id.editTextEmail);
         editTextOldPassword = view.findViewById(R.id.editTextOldPassword);
         editTextNewPassword = view.findViewById(R.id.editTextNewPassword);
@@ -101,7 +103,7 @@ public class AccountFragment extends Fragment {
                     case "POST":
                         response = RequestHandler.post(requestUrl, requestParams);
                         break;
-                    case "PATCH":
+                    case "PUT":
                         response = RequestHandler.put(requestUrl, requestParams);
                         break;
                 }
@@ -120,7 +122,8 @@ public class AccountFragment extends Fragment {
                 switch (requestType) {
                     case "GET":
                         User user = converter.fromJson(response.getContent(), User.class);
-                        editTextFullname.setText(user.getFullname());
+                        editTextLastName.setText(user.getLastName());
+                        editTextFirstName.setText(user.getFirstName());
                         editTextEmail.setText(user.getEmail());
                         break;
                     case "PUT":
@@ -130,7 +133,6 @@ public class AccountFragment extends Fragment {
                             Toast.makeText(getActivity(), "Sikeres módosítás", Toast.LENGTH_SHORT).show();
 
                         }
-
                 }
             }
         }

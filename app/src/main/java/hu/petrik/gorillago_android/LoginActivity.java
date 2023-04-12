@@ -8,33 +8,37 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
 import java.io.IOException;
 
 import hu.petrik.gorillago_android.classes.Login;
 import hu.petrik.gorillago_android.classes.Token;
+import hu.petrik.gorillago_android.classes.User;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private MaterialButton buttonBack, buttonLogin;
+    private MaterialButton buttonLogin;
+    private MaterialToolbar buttonBack;
     private TextInputEditText inputEmail, inputPassword;
+    private TextInputLayout inputLoginEmailLayout, inputLoginPasswordLayout;
     private String url = "http://10.0.2.2:3000/login";
+    private String url_get = "http://10.0.2.2:3000/userbyemail";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
         setContentView(R.layout.activity_login);
         init();
 
@@ -56,15 +60,13 @@ public class LoginActivity extends AppCompatActivity {
     private void login(){
         String email = inputEmail.getText().toString().trim();
         String password = inputPassword.getText().toString().trim();
+        inputLoginEmailLayout.setError(null);
+        inputLoginPasswordLayout.setError(null);
+        RequestTask task_get = new RequestTask(url_get + "/" + email, "GET");
+        task_get.execute();
 
         if (email.isEmpty() || password.isEmpty()){
             Toast.makeText(this, "Minden mezőt ki kell tölteni", Toast.LENGTH_SHORT).show();
-        }
-        else if (!email.contains("@")){
-            Toast.makeText(this, "Nem megfelelő az email", Toast.LENGTH_SHORT).show();
-        }
-        else if(password.toString().length() < 8){
-            Toast.makeText(this, "A jelszónak legalább 8 karakternek kell lennie", Toast.LENGTH_SHORT).show();
         }
 
         Login user = new Login( email, password);
@@ -80,6 +82,8 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin = findViewById(R.id.buttonLogin);
         inputEmail = findViewById(R.id.inputLogin);
         inputPassword= findViewById(R.id.inputLoginPassword);
+        inputLoginEmailLayout = findViewById(R.id.inputLoginEmailLayout);
+        inputLoginPasswordLayout = findViewById(R.id.inputLoginPasswordLayout);
     }
 
     private class RequestTask extends AsyncTask<Void, Void, Response> {
@@ -124,23 +128,51 @@ public class LoginActivity extends AppCompatActivity {
             Gson converter = new Gson();
             if (response==null|| response.getResponseCode() >= 400){
                 Toast.makeText(LoginActivity.this, "Hiba a Bejelentkezés során", Toast.LENGTH_SHORT).show();
+                inputLoginPasswordLayout.setError("Hibás felhasználó vagy jelszó.");
+                inputLoginPasswordLayout.setErrorIconDrawable(R.drawable.custom_error_icon);
+                inputPassword.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        // Do nothing
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        inputLoginPasswordLayout.setError(null); // Clear the error
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        // Do nothing
+                    }
+                });
             }else {
-                Toast.makeText(LoginActivity.this, "Sikeres Bejelentkezés", Toast.LENGTH_SHORT).show();
-                Token token = converter.fromJson(
-                        response.getContent(), Token.class);
-                String tokenString = token.getToken();
-                int userId = token.getId();
-                Toast.makeText(LoginActivity.this,
-                        String.valueOf(userId), Toast.LENGTH_SHORT).show();
-                SharedPreferences sharedPreferences=getSharedPreferences("MyPref", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor=sharedPreferences.edit();
-                editor.putString("token", tokenString);
-                editor.putInt("userId", userId);
-                editor.commit();
-
-
-                startActivity(new Intent(LoginActivity.this, GorillaGoActivity.class));
-                finish();
+                switch (requestType) {
+                    case "GET":
+                        User user = converter.fromJson(
+                                response.getContent(), User.class);
+                        if (user == null){
+                           // Toast.makeText(LoginActivity.this, "Ilyen email cím már létezik", Toast.LENGTH_SHORT).show();
+                            inputLoginEmailLayout.setError("Ilyen email címmel nem létezik felhasználó.");
+                            return; // megszakítás
+                        }
+                        break;
+                    case "POST":
+                        Toast.makeText(LoginActivity.this, "Sikeres Bejelentkezés", Toast.LENGTH_SHORT).show();
+                        Token token = converter.fromJson(
+                                response.getContent(), Token.class);
+                        String tokenString = token.getToken();
+                        int userId = token.getId();
+                        Toast.makeText(LoginActivity.this,
+                                String.valueOf(userId), Toast.LENGTH_SHORT).show();
+                        SharedPreferences sharedPreferences=getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putString("token", tokenString);
+                        editor.putInt("userId", userId);
+                        editor.commit();
+                        startActivity(new Intent(LoginActivity.this, GorillaGoActivity.class));
+                        finish();
+                }
             }
         }
     }
