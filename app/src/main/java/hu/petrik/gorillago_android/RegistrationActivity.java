@@ -116,7 +116,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
             });
         }
-        User user = new User(0, email, password, repassword, "", "", 0);
+        User user = new User(0, email, password, repassword, "", "", "", 0);
         Gson jsonConverter = new Gson();
         RequestTask task = new RequestTask(url, "POST", jsonConverter.toJson(user));
         task.execute();

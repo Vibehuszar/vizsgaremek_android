@@ -22,7 +22,13 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/fragment_container"
+            android:id="@+id/fragment_container_account"
+            android:visibility="gone"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/fragment_container_search"
             android:visibility="gone"/>
 
         <TextView
@@ -31,7 +37,7 @@
             android:textColor="@color/white"
             android:text="Ajánlott éttermek"
             android:textSize="30dp"
-            android:id="@+id/textViewTop"
+            android:id="@+id/textViewRestaurants"
             android:layout_margin="20dp"
             android:gravity="center_horizontal"
             />
@@ -44,9 +50,9 @@
             />-->
 
         <HorizontalScrollView
-            android:id="@+id/horizontalScrollView"
+            android:id="@+id/horizontalScrollViewRestaurants"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="1dp"
             android:layout_marginTop="1dp"
             android:layout_marginEnd="1dp"
@@ -55,7 +61,7 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:foregroundGravity="center"
                 android:orientation="horizontal">
 
@@ -65,7 +71,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:backgroundTint="@android:color/transparent">
+                    android:backgroundTint="@android:color/transparent"
+                    app:strokeColor="@color/navbarpurple"
+                    app:strokeWidth="2dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -73,7 +81,7 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="140dp"
+                            android:layout_width="160dp"
                             android:layout_height="80dp"
                             android:scaleType="centerCrop"
                             android:id="@+id/imageViewRecommended1"
@@ -82,7 +90,6 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
                             android:padding="5dp">
 
                             <TextView
@@ -99,19 +106,19 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="8dp"
-                            android:orientation="horizontal">
+                            android:layout_margin="8dp">
+
                             <com.google.android.material.button.MaterialButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="8dp"
-                                android:text="action"
+                                android:text="Rendelés"
+                                android:textSize="18dp"
+                                android:textAllCaps="false"
                                 style="?attr/borderlessButtonStyle"
                                 />
                         </LinearLayout>
-
                     </LinearLayout>
-
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
@@ -119,7 +126,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:backgroundTint="@android:color/transparent">
+                    android:backgroundTint="@android:color/transparent"
+                    app:strokeColor="@color/navbarpurple"
+                    app:strokeWidth="2dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -127,7 +136,7 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="140dp"
+                            android:layout_width="160dp"
                             android:layout_height="80dp"
                             android:scaleType="centerCrop"
                             android:id="@+id/imageViewRecommended2"
@@ -136,7 +145,6 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
                             android:padding="5dp">
 
                             <TextView
@@ -153,13 +161,14 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="8dp"
-                            android:orientation="horizontal">
+                            android:layout_margin="8dp">
                             <com.google.android.material.button.MaterialButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="8dp"
-                                android:text="action"
+                                android:text="Rendelés"
+                                android:textSize="18dp"
+                                android:textAllCaps="false"
                                 style="?attr/borderlessButtonStyle"
                                 />
                         </LinearLayout>
@@ -173,7 +182,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:backgroundTint="@android:color/transparent">
+                    android:backgroundTint="@android:color/transparent"
+                    app:strokeColor="@color/navbarpurple"
+                    app:strokeWidth="2dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -181,7 +192,7 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="140dp"
+                            android:layout_width="160dp"
                             android:layout_height="80dp"
                             android:scaleType="centerCrop"
                             android:id="@+id/imageViewRecommended3"
@@ -190,13 +201,14 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
                             android:padding="5dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Étterem"
+                                android:ellipsize="end"
+                                android:maxLines="2"
                                 android:textAppearance="?attr/textAppearanceHeadline6"
                                 android:id="@+id/textViewRecommended3"
                                 android:textColor="@color/white"
@@ -207,19 +219,317 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="8dp"
-                            android:orientation="horizontal">
+                            android:layout_margin="8dp">
+
                             <com.google.android.material.button.MaterialButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="8dp"
-                                android:text="action"
-                                style="?attr/borderlessButtonStyle"
+                                android:text="Rendelés"
+                                android:textSize="18dp"
+                                android:textAllCaps="false"
+                                style="?attr/borderlessButtonStyle" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:backgroundTint="@android:color/transparent"
+                    app:strokeColor="@color/navbarpurple"
+                    app:strokeWidth="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="160dp"
+                            android:layout_height="80dp"
+                            android:scaleType="centerCrop"
+                            android:id="@+id/imageViewRecommended4"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Étterem"
+                                android:textAppearance="?attr/textAppearanceHeadline6"
+                                android:id="@+id/textViewRecommended4"
+                                android:textColor="@color/white"
+                                android:textSize="20dp"
                                 />
                         </LinearLayout>
 
-                    </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp">
 
+                            <com.google.android.material.button.MaterialButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:text="Rendelés"
+                                android:textSize="18dp"
+                                android:textAllCaps="false"
+                                style="?attr/borderlessButtonStyle" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+        </HorizontalScrollView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Ajánlott Boltok"
+            android:textSize="30dp"
+            android:id="@+id/textViewMarkets"
+            android:layout_margin="20dp"
+            android:gravity="center_horizontal"
+            />
+
+        <HorizontalScrollView
+            android:id="@+id/horizontalScrollViewMarkets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="1dp"
+            android:foregroundGravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foregroundGravity="center"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardmarket1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:backgroundTint="@android:color/transparent"
+                    app:strokeColor="@color/navbarpurple"
+                    app:strokeWidth="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="160dp"
+                            android:layout_height="80dp"
+                            android:scaleType="centerCrop"
+                            android:id="@+id/imageViewMarket1"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Bolt"
+                                android:textAppearance="?attr/textAppearanceHeadline6"
+                                android:id="@+id/textViewMarket1"
+                                android:textColor="@color/white"
+                                android:textSize="20dp"
+                                />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:text="Rendelés"
+                                android:textSize="18dp"
+                                android:textAllCaps="false"
+                                style="?attr/borderlessButtonStyle"
+                                />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardmarket2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:backgroundTint="@android:color/transparent"
+                    app:strokeColor="@color/navbarpurple"
+                    app:strokeWidth="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="160dp"
+                            android:layout_height="80dp"
+                            android:scaleType="centerCrop"
+                            android:id="@+id/imageViewMarket2"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Bolt"
+                                android:textAppearance="?attr/textAppearanceHeadline6"
+                                android:id="@+id/textViewMarket2"
+                                android:textColor="@color/white"
+                                android:textSize="20dp"
+                                />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:text="Rendelés"
+                                android:textSize="18dp"
+                                android:textAllCaps="false"
+                                style="?attr/borderlessButtonStyle"
+                                />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardmarket3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:backgroundTint="@android:color/transparent"
+                    app:strokeColor="@color/navbarpurple"
+                    app:strokeWidth="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="160dp"
+                            android:layout_height="80dp"
+                            android:scaleType="centerCrop"
+                            android:id="@+id/imageViewMarket3"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Bolt"
+                                android:textAppearance="?attr/textAppearanceHeadline6"
+                                android:id="@+id/textViewMarket3"
+                                android:textColor="@color/white"
+                                android:textSize="20dp"
+                                />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:text="Rendelés"
+                                android:textSize="18dp"
+                                android:textAllCaps="false"
+                                style="?attr/borderlessButtonStyle"
+                                />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardmarket4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:backgroundTint="@android:color/transparent"
+                    app:strokeColor="@color/navbarpurple"
+                    app:strokeWidth="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="160dp"
+                            android:layout_height="80dp"
+                            android:scaleType="centerCrop"
+                            android:id="@+id/imageViewMarket4"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Bolt"
+                                android:textAppearance="?attr/textAppearanceHeadline6"
+                                android:id="@+id/textViewMarket4"
+                                android:textColor="@color/white"
+                                android:textSize="20dp"
+                                />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:text="Rendelés"
+                                android:textSize="18dp"
+                                android:textAllCaps="false"
+                                style="?attr/borderlessButtonStyle"
+                                />
+                        </LinearLayout>
+                    </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>
@@ -231,6 +541,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/menu_items"
-        android:id="@+id/navigationView"/>
+        android:id="@+id/navigationView"
+        app:headerLayout="@layout/nav_header"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

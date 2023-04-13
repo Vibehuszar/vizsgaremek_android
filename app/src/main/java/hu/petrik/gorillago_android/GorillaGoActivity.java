@@ -39,11 +39,11 @@ import hu.petrik.gorillago_android.classes.Restaurant;
 public class GorillaGoActivity extends AppCompatActivity {
 
     private ListView listViewRestaurants;
-    private TextView textViewRecommended1, textViewRecommended2, textViewRecommended3;
+    private TextView textViewRecommended1, textViewRecommended2, textViewRecommended3, textViewRecommended4;
 
-    private ImageView imageViewRecommended1, imageViewRecommended2, imageViewRecommended3;
+    private ImageView imageViewRecommended1, imageViewRecommended2, imageViewRecommended3, imageViewRecommended4;
 
-    private HorizontalScrollView horizontalScrollView;
+    private HorizontalScrollView horizontalScrollViewRestaurants, horizontalScrollViewMarkets ;
     private List<Restaurant> restaurants = new ArrayList<>();
 
     private Restaurant[] restaurantArray = new Restaurant[5];
@@ -54,10 +54,10 @@ public class GorillaGoActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
 
-    private FrameLayout frameLayout;
+    private FrameLayout frameLayoutAccount, frameLayoutSearch;
 
     private NavigationView navigationView;
-    private TextView textViewTop;
+    private TextView textViewRestaurants, textViewMarkets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,18 +77,33 @@ public class GorillaGoActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.home:
-                        frameLayout.setVisibility(View.GONE);
-                        horizontalScrollView.setVisibility(View.VISIBLE);
-                        textViewTop.setVisibility(View.VISIBLE);
+                        frameLayoutAccount.setVisibility(View.GONE);
+                        frameLayoutSearch.setVisibility(View.GONE);
+                        horizontalScrollViewRestaurants.setVisibility(View.VISIBLE);
+                        horizontalScrollViewMarkets.setVisibility(View.VISIBLE);
+                        textViewRestaurants.setVisibility(View.VISIBLE);
+                        textViewMarkets.setVisibility(View.VISIBLE);
                         break;
                     case R.id.account:
-                        frameLayout.setVisibility(View.VISIBLE);
-                        horizontalScrollView.setVisibility(View.GONE);
-                        textViewTop.setVisibility(View.GONE);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AccountFragment()).commit();
+                        frameLayoutAccount.setVisibility(View.VISIBLE);
+                        frameLayoutSearch.setVisibility(View.GONE);
+                        horizontalScrollViewRestaurants.setVisibility(View.GONE);
+                        horizontalScrollViewMarkets.setVisibility(View.GONE);
+                        textViewRestaurants.setVisibility(View.GONE);
+                        textViewMarkets.setVisibility(View.GONE);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_account, new AccountFragment()).commit();
                         break;
                     case R.id.logout:
                         alert.show();
+                        break;
+                    case R.id.search:
+                        frameLayoutAccount.setVisibility(View.GONE);
+                        frameLayoutSearch.setVisibility(View.VISIBLE);
+                        horizontalScrollViewRestaurants.setVisibility(View.GONE);
+                        horizontalScrollViewMarkets.setVisibility(View.GONE);
+                        textViewRestaurants.setVisibility(View.GONE);
+                        textViewMarkets.setVisibility(View.GONE);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_search, new SearchFragment()).commit();
                         break;
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
@@ -103,18 +118,23 @@ public class GorillaGoActivity extends AppCompatActivity {
         //listViewRestaurants.setAdapter(new RestaurantAdapter());
         navigationView = findViewById(R.id.navigationView);
         toolbar = findViewById(R.id.toolBar);
-        frameLayout = findViewById(R.id.fragment_container);
+        frameLayoutAccount = findViewById(R.id.fragment_container_account);
+        frameLayoutSearch = findViewById(R.id.fragment_container_search);
         drawerLayout = findViewById(R.id.my_drawer_layout);
-        textViewTop = findViewById(R.id.textViewTop);
+        textViewRestaurants = findViewById(R.id.textViewRestaurants);
+        textViewMarkets = findViewById(R.id.textViewMarkets);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.nav_open, R.string.nav_close);
         actionBarDrawerToggle.getDrawerArrowDrawable().setColor(Color.WHITE);
         textViewRecommended1 = findViewById(R.id.textViewRecommended1);
         textViewRecommended2 = findViewById(R.id.textViewRecommended2);
         textViewRecommended3 = findViewById(R.id.textViewRecommended3);
+        textViewRecommended4 = findViewById(R.id.textViewRecommended4);
         imageViewRecommended1 = findViewById(R.id.imageViewRecommended1);
         imageViewRecommended2 = findViewById(R.id.imageViewRecommended2);
         imageViewRecommended3 = findViewById(R.id.imageViewRecommended3);
-        horizontalScrollView = findViewById(R.id.horizontalScrollView);
+        imageViewRecommended4 = findViewById(R.id.imageViewRecommended4);
+        horizontalScrollViewRestaurants = findViewById(R.id.horizontalScrollViewRestaurants);
+        horizontalScrollViewMarkets = findViewById(R.id.horizontalScrollViewMarkets);
         alert = new AlertDialog.Builder(GorillaGoActivity.this);
         alert.setMessage("Biztos ki akar jelentkezni?")
                 .setPositiveButton("Nem", new DialogInterface.OnClickListener(){
@@ -202,6 +222,8 @@ public class GorillaGoActivity extends AppCompatActivity {
                         restaurants.addAll(Arrays.asList(restaurantsArray));
                         for (int i = 0; i < restaurantsArray.length; i++) {
                             restaurantArray[i] = restaurantsArray[i];
+                            textViewRecommended1.setText(restaurantArray[i].getName());
+                            Picasso.get().load(restaurantArray[i].getUrl()).into(imageViewRecommended1);
                         }
                         textViewRecommended1.setText(restaurantArray[0].getName());
                         Picasso.get().load(restaurantArray[0].getUrl()).into(imageViewRecommended1);
@@ -209,6 +231,8 @@ public class GorillaGoActivity extends AppCompatActivity {
                         Picasso.get().load(restaurantArray[1].getUrl()).into(imageViewRecommended2);
                         textViewRecommended3.setText(restaurantArray[2].getName());
                         Picasso.get().load(restaurantArray[2].getUrl()).into(imageViewRecommended3);
+                        textViewRecommended4.setText(restaurantArray[3].getName());
+                        Picasso.get().load(restaurantArray[3].getUrl()).into(imageViewRecommended4);
                         break;
                 }
             }

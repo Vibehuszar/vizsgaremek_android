@@ -28,4 +28,10 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:background">@color/navbarpurple</item>
+        <item name="android:queryBackground">@null</item>
+        <item name="android:iconifiedByDefault">false</item>
+    </style>
 </resources>
