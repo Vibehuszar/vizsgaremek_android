@@ -1,4 +1,4 @@
-package hu.petrik.gorillago_android;
+package hu.petrik.gorillago_android.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +24,9 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 
+import hu.petrik.gorillago_android.R;
+import hu.petrik.gorillago_android.RequestHandler;
+import hu.petrik.gorillago_android.Response;
 import hu.petrik.gorillago_android.classes.UpdateUser;
 import hu.petrik.gorillago_android.classes.UpdateUserPassword;
 import hu.petrik.gorillago_android.classes.User;
