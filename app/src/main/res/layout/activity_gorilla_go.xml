@@ -1,11 +1,11 @@
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GorillaGoActivity"
     android:background="@drawable/bgcolor"
-    android:id="@+id/my_drawer_layout">
+    tools:context=".GorillaGoActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,41 +13,39 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:id="@+id/toolBar"
-            android:elevation="4dp"
-            android:background="@color/navbarpurple"/>
+            android:background="@color/navbarpurple"
+            android:elevation="4dp" />
 
         <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:id="@+id/fragment_container_account"
-            android:visibility="gone"/>
-
-        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <FrameLayout
             android:id="@+id/fragment_container_search"
-            android:visibility="gone"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <FrameLayout
+            android:id="@+id/fragment_container_restaurant"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
 
         <TextView
+            android:id="@+id/textViewRestaurants"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="Ajánlott éttermek"
-            android:textSize="30dp"
-            android:id="@+id/textViewRestaurants"
             android:layout_margin="20dp"
             android:gravity="center_horizontal"
-            />
-
-        <!--<ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/listViewRestaurants"
-            tools:listitem="@layout/restaurantadapter"
-            />-->
+            android:text="Ajánlott éttermek"
+            android:textColor="@color/white"
+            android:textSize="30dp" />
 
         <HorizontalScrollView
             android:id="@+id/horizontalScrollViewRestaurants"
@@ -65,13 +63,13 @@
                 android:foregroundGravity="center"
                 android:orientation="horizontal">
 
-
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card1"
+                    android:id="@+id/cardRestaurant1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:backgroundTint="@android:color/transparent"
+                    android:clickable="true"
                     app:strokeColor="@color/navbarpurple"
                     app:strokeWidth="2dp">
 
@@ -81,52 +79,48 @@
                         android:orientation="vertical">
 
                         <ImageView
+                            android:id="@+id/imageViewRestaurant1"
                             android:layout_width="160dp"
                             android:layout_height="80dp"
-                            android:scaleType="centerCrop"
-                            android:id="@+id/imageViewRecommended1"
-                            />
+                            android:scaleType="centerCrop" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="5dp">
+                            android:orientation="vertical"
+                            android:padding="10dp">
 
                             <TextView
+                                android:id="@+id/textViewRestaurant1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Étterem"
                                 android:textAppearance="?attr/textAppearanceHeadline6"
-                                android:id="@+id/textViewRecommended1"
                                 android:textColor="@color/white"
-                                android:textSize="20dp"
-                                />
-                        </LinearLayout>
+                                android:textSize="20dp" />
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="8dp">
-
-                            <com.google.android.material.button.MaterialButton
+                            <TextView
+                                android:id="@+id/textviewRestaurantDescription1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:text="Rendelés"
-                                android:textSize="18dp"
-                                android:textAllCaps="false"
-                                style="?attr/borderlessButtonStyle"
-                                />
+                                android:layout_marginTop="8dp"
+                                android:text="nagyon jó"
+                                android:textAppearance="?attr/textAppearanceBody2"
+                                android:textColor="@color/white" />
+
                         </LinearLayout>
+
                     </LinearLayout>
+
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card2"
+                    android:id="@+id/cardRestaurant2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:backgroundTint="@android:color/transparent"
+                    android:clickable="true"
                     app:strokeColor="@color/navbarpurple"
                     app:strokeWidth="2dp">
 
@@ -136,53 +130,47 @@
                         android:orientation="vertical">
 
                         <ImageView
+                            android:id="@+id/imageViewRestaurant2"
                             android:layout_width="160dp"
                             android:layout_height="80dp"
-                            android:scaleType="centerCrop"
-                            android:id="@+id/imageViewRecommended2"
-                            />
+                            android:scaleType="centerCrop" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="5dp">
+                            android:orientation="vertical"
+                            android:padding="10dp">
 
                             <TextView
+                                android:id="@+id/textViewRestaurant2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Étterem"
                                 android:textAppearance="?attr/textAppearanceHeadline6"
-                                android:id="@+id/textViewRecommended2"
                                 android:textColor="@color/white"
-                                android:textSize="20dp"
-                                />
-                        </LinearLayout>
+                                android:textSize="20dp" />
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="8dp">
-                            <com.google.android.material.button.MaterialButton
+                            <TextView
+                                android:id="@+id/textviewRestaurantDescription2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:text="Rendelés"
-                                android:textSize="18dp"
-                                android:textAllCaps="false"
-                                style="?attr/borderlessButtonStyle"
-                                />
+                                android:layout_marginTop="8dp"
+                                android:text="nagyon jó"
+                                android:textAppearance="?attr/textAppearanceBody2"
+                                android:textColor="@color/white" />
+
                         </LinearLayout>
 
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
-
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card3"
+                    android:id="@+id/cardRestaurant3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:backgroundTint="@android:color/transparent"
+                    android:clickable="true"
                     app:strokeColor="@color/navbarpurple"
                     app:strokeWidth="2dp">
 
@@ -192,53 +180,47 @@
                         android:orientation="vertical">
 
                         <ImageView
+                            android:id="@+id/imageViewRestaurant3"
                             android:layout_width="160dp"
                             android:layout_height="80dp"
-                            android:scaleType="centerCrop"
-                            android:id="@+id/imageViewRecommended3"
-                            />
+                            android:scaleType="centerCrop" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="5dp">
+                            android:orientation="vertical"
+                            android:padding="10dp">
 
                             <TextView
+                                android:id="@+id/textViewRestaurant3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Étterem"
-                                android:ellipsize="end"
-                                android:maxLines="2"
                                 android:textAppearance="?attr/textAppearanceHeadline6"
-                                android:id="@+id/textViewRecommended3"
                                 android:textColor="@color/white"
-                                android:textSize="20dp"
-                                />
-                        </LinearLayout>
+                                android:textSize="20dp" />
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="8dp">
-
-                            <com.google.android.material.button.MaterialButton
+                            <TextView
+                                android:id="@+id/textviewRestaurantDescription3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:text="Rendelés"
-                                android:textSize="18dp"
-                                android:textAllCaps="false"
-                                style="?attr/borderlessButtonStyle" />
-                        </LinearLayout>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+                                android:layout_marginTop="8dp"
+                                android:text="nagyon jó"
+                                android:textAppearance="?attr/textAppearanceBody2"
+                                android:textColor="@color/white" />
 
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card4"
+                    android:id="@+id/cardRestaurant4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:backgroundTint="@android:color/transparent"
+                    android:clickable="true"
                     app:strokeColor="@color/navbarpurple"
                     app:strokeWidth="2dp">
 
@@ -248,56 +230,53 @@
                         android:orientation="vertical">
 
                         <ImageView
+                            android:id="@+id/imageViewRestaurant4"
                             android:layout_width="160dp"
                             android:layout_height="80dp"
-                            android:scaleType="centerCrop"
-                            android:id="@+id/imageViewRecommended4"
-                            />
+                            android:scaleType="centerCrop" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="5dp">
+                            android:orientation="vertical"
+                            android:padding="10dp">
 
                             <TextView
+                                android:id="@+id/textViewRestaurant4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Étterem"
                                 android:textAppearance="?attr/textAppearanceHeadline6"
-                                android:id="@+id/textViewRecommended4"
                                 android:textColor="@color/white"
-                                android:textSize="20dp"
-                                />
-                        </LinearLayout>
+                                android:textSize="20dp" />
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="8dp">
-
-                            <com.google.android.material.button.MaterialButton
+                            <TextView
+                                android:id="@+id/textviewRestaurantDescription4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:text="Rendelés"
-                                android:textSize="18dp"
-                                android:textAllCaps="false"
-                                style="?attr/borderlessButtonStyle" />
+                                android:layout_marginTop="8dp"
+                                android:text="nagyon jó"
+                                android:textAppearance="?attr/textAppearanceBody2"
+                                android:textColor="@color/white" />
+
                         </LinearLayout>
+
                     </LinearLayout>
+
                 </com.google.android.material.card.MaterialCardView>
+
             </LinearLayout>
         </HorizontalScrollView>
+
         <TextView
+            android:id="@+id/textViewMarkets"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="Ajánlott Boltok"
-            android:textSize="30dp"
-            android:id="@+id/textViewMarkets"
             android:layout_margin="20dp"
             android:gravity="center_horizontal"
-            />
+            android:text="Ajánlott Boltok"
+            android:textColor="@color/white"
+            android:textSize="30dp" />
 
         <HorizontalScrollView
             android:id="@+id/horizontalScrollViewMarkets"
@@ -316,11 +295,12 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardmarket1"
+                    android:id="@+id/cardMarket1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:backgroundTint="@android:color/transparent"
+                    android:clickable="true"
                     app:strokeColor="@color/navbarpurple"
                     app:strokeWidth="2dp">
 
@@ -330,51 +310,47 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="160dp"
-                            android:layout_height="80dp"
-                            android:scaleType="centerCrop"
                             android:id="@+id/imageViewMarket1"
-                            />
+                            android:layout_width="160dp"
+                            android:layout_height="80dp"
+                            android:scaleType="centerCrop" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="5dp">
+                            android:orientation="vertical"
+                            android:padding="10dp">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Bolt"
-                                android:textAppearance="?attr/textAppearanceHeadline6"
                                 android:id="@+id/textViewMarket1"
-                                android:textColor="@color/white"
-                                android:textSize="20dp"
-                                />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="8dp">
-
-                            <com.google.android.material.button.MaterialButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:text="Rendelés"
-                                android:textSize="18dp"
-                                android:textAllCaps="false"
-                                style="?attr/borderlessButtonStyle"
-                                />
+                                android:text="Étterem"
+                                android:textAppearance="?attr/textAppearanceHeadline6"
+                                android:textColor="@color/white"
+                                android:textSize="20dp" />
+
+                            <TextView
+                                android:id="@+id/textviewMarketDescription1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="nagyon jó"
+                                android:textAppearance="?attr/textAppearanceBody2"
+                                android:textColor="@color/white" />
+
                         </LinearLayout>
+
                     </LinearLayout>
+
                 </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardmarket2"
+                    android:id="@+id/cardMarket2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:backgroundTint="@android:color/transparent"
+                    android:clickable="true"
                     app:strokeColor="@color/navbarpurple"
                     app:strokeWidth="2dp">
 
@@ -384,51 +360,47 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="160dp"
-                            android:layout_height="80dp"
-                            android:scaleType="centerCrop"
                             android:id="@+id/imageViewMarket2"
-                            />
+                            android:layout_width="160dp"
+                            android:layout_height="80dp"
+                            android:scaleType="centerCrop" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="5dp">
+                            android:orientation="vertical"
+                            android:padding="10dp">
 
                             <TextView
+                                android:id="@+id/textViewRMarket2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Bolt"
+                                android:text="Étterem"
                                 android:textAppearance="?attr/textAppearanceHeadline6"
-                                android:id="@+id/textViewMarket2"
                                 android:textColor="@color/white"
-                                android:textSize="20dp"
-                                />
-                        </LinearLayout>
+                                android:textSize="20dp" />
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="8dp">
-
-                            <com.google.android.material.button.MaterialButton
+                            <TextView
+                                android:id="@+id/textviewMarketDescription2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:text="Rendelés"
-                                android:textSize="18dp"
-                                android:textAllCaps="false"
-                                style="?attr/borderlessButtonStyle"
-                                />
+                                android:layout_marginTop="8dp"
+                                android:text="nagyon jó"
+                                android:textAppearance="?attr/textAppearanceBody2"
+                                android:textColor="@color/white" />
+
                         </LinearLayout>
+
                     </LinearLayout>
+
                 </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardmarket3"
+                    android:id="@+id/cardMarket3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:backgroundTint="@android:color/transparent"
+                    android:clickable="true"
                     app:strokeColor="@color/navbarpurple"
                     app:strokeWidth="2dp">
 
@@ -438,51 +410,47 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="160dp"
-                            android:layout_height="80dp"
-                            android:scaleType="centerCrop"
                             android:id="@+id/imageViewMarket3"
-                            />
+                            android:layout_width="160dp"
+                            android:layout_height="80dp"
+                            android:scaleType="centerCrop" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="5dp">
+                            android:orientation="vertical"
+                            android:padding="10dp">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Bolt"
-                                android:textAppearance="?attr/textAppearanceHeadline6"
                                 android:id="@+id/textViewMarket3"
-                                android:textColor="@color/white"
-                                android:textSize="20dp"
-                                />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="8dp">
-
-                            <com.google.android.material.button.MaterialButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:text="Rendelés"
-                                android:textSize="18dp"
-                                android:textAllCaps="false"
-                                style="?attr/borderlessButtonStyle"
-                                />
+                                android:text="Étterem"
+                                android:textAppearance="?attr/textAppearanceHeadline6"
+                                android:textColor="@color/white"
+                                android:textSize="20dp" />
+
+                            <TextView
+                                android:id="@+id/textviewMarketDescription3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="nagyon jó"
+                                android:textAppearance="?attr/textAppearanceBody2"
+                                android:textColor="@color/white" />
+
                         </LinearLayout>
+
                     </LinearLayout>
+
                 </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardmarket4"
+                    android:id="@+id/cardMarket4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:backgroundTint="@android:color/transparent"
+                    android:clickable="true"
                     app:strokeColor="@color/navbarpurple"
                     app:strokeWidth="2dp">
 
@@ -492,56 +460,50 @@
                         android:orientation="vertical">
 
                         <ImageView
+                            android:id="@+id/imageViewMarket4"
                             android:layout_width="160dp"
                             android:layout_height="80dp"
-                            android:scaleType="centerCrop"
-                            android:id="@+id/imageViewMarket4"
-                            />
+                            android:scaleType="centerCrop" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="5dp">
+                            android:orientation="vertical"
+                            android:padding="10dp">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Bolt"
-                                android:textAppearance="?attr/textAppearanceHeadline6"
                                 android:id="@+id/textViewMarket4"
-                                android:textColor="@color/white"
-                                android:textSize="20dp"
-                                />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="8dp">
-
-                            <com.google.android.material.button.MaterialButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:text="Rendelés"
-                                android:textSize="18dp"
-                                android:textAllCaps="false"
-                                style="?attr/borderlessButtonStyle"
-                                />
-                        </LinearLayout>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+                                android:text="Étterem"
+                                android:textAppearance="?attr/textAppearanceHeadline6"
+                                android:textColor="@color/white"
+                                android:textSize="20dp" />
 
+                            <TextView
+                                android:id="@+id/textviewMarketDescription4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="nagyon jó"
+                                android:textAppearance="?attr/textAppearanceBody2"
+                                android:textColor="@color/white" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigationView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:menu="@menu/menu_items"
-        android:id="@+id/navigationView"
-        app:headerLayout="@layout/nav_header"/>
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/menu_items" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

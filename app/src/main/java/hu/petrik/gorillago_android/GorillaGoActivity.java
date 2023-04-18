@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
@@ -35,29 +36,29 @@ import java.util.Arrays;
 import java.util.List;
 
 import hu.petrik.gorillago_android.classes.Restaurant;
+import hu.petrik.gorillago_android.fragments.AccountFragment;
+import hu.petrik.gorillago_android.fragments.RestaurantFragment;
+import hu.petrik.gorillago_android.fragments.SearchFragment;
 
 public class GorillaGoActivity extends AppCompatActivity {
-
-    private ListView listViewRestaurants;
-    private TextView textViewRecommended1, textViewRecommended2, textViewRecommended3, textViewRecommended4;
-
-    private ImageView imageViewRecommended1, imageViewRecommended2, imageViewRecommended3, imageViewRecommended4;
-
+    private TextView textViewRestaurant1, textViewRestaurant2, textViewRestaurant3, textViewRestaurant4,
+            textviewRestaurantDescription1, textviewRestaurantDescription2, textviewRestaurantDescription3, textviewRestaurantDescription4,
+            textViewMarket1, textViewMarket2, textViewMarket3, textViewMarket4,
+            textviewMarketDescription1, textviewMarketDescription2, textviewMarketDescription3, textviewMarketDescription4;
+    private ImageView imageViewRestaurant1, imageViewRestaurant2, imageViewRestaurant3, imageViewRestaurant4,
+            imageViewMarket1, imageViewMarket2, imageViewMarket3, imageViewMarket4;
     private HorizontalScrollView horizontalScrollViewRestaurants, horizontalScrollViewMarkets ;
     private List<Restaurant> restaurants = new ArrayList<>();
-
-    private Restaurant[] restaurantArray = new Restaurant[5];
+    private Restaurant[] restaurantsArray = new Restaurant[5];
     private AlertDialog.Builder alert;
     private String url = "http://10.0.2.2:3000/restaurants";
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
-
     private Toolbar toolbar;
-
-    private FrameLayout frameLayoutAccount, frameLayoutSearch;
-
+    private FrameLayout frameLayoutAccount, frameLayoutSearch, frameLayoutRestaurant;
     private NavigationView navigationView;
     private TextView textViewRestaurants, textViewMarkets;
+    private MaterialCardView cardRestaurant1, cardRestaurant2, cardRestaurant3, cardRestaurant4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,7 @@ public class GorillaGoActivity extends AppCompatActivity {
                     case R.id.home:
                         frameLayoutAccount.setVisibility(View.GONE);
                         frameLayoutSearch.setVisibility(View.GONE);
+                        frameLayoutRestaurant.setVisibility(View.GONE);
                         horizontalScrollViewRestaurants.setVisibility(View.VISIBLE);
                         horizontalScrollViewMarkets.setVisibility(View.VISIBLE);
                         textViewRestaurants.setVisibility(View.VISIBLE);
@@ -87,6 +89,7 @@ public class GorillaGoActivity extends AppCompatActivity {
                     case R.id.account:
                         frameLayoutAccount.setVisibility(View.VISIBLE);
                         frameLayoutSearch.setVisibility(View.GONE);
+                        frameLayoutRestaurant.setVisibility(View.GONE);
                         horizontalScrollViewRestaurants.setVisibility(View.GONE);
                         horizontalScrollViewMarkets.setVisibility(View.GONE);
                         textViewRestaurants.setVisibility(View.GONE);
@@ -99,6 +102,7 @@ public class GorillaGoActivity extends AppCompatActivity {
                     case R.id.search:
                         frameLayoutAccount.setVisibility(View.GONE);
                         frameLayoutSearch.setVisibility(View.VISIBLE);
+                        frameLayoutRestaurant.setVisibility(View.GONE);
                         horizontalScrollViewRestaurants.setVisibility(View.GONE);
                         horizontalScrollViewMarkets.setVisibility(View.GONE);
                         textViewRestaurants.setVisibility(View.GONE);
@@ -110,29 +114,53 @@ public class GorillaGoActivity extends AppCompatActivity {
                 return true;
             }
         });
+        cardRestaurant1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int restaurantId = restaurantsArray[0].getId();
+                SharedPreferences sharedPreferences=getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor=sharedPreferences.edit();
+                editor.putInt("restaurantId", restaurantId);
+                editor.commit();
+                System.out.println(restaurantId);
+                frameLayoutAccount.setVisibility(View.GONE);
+                frameLayoutSearch.setVisibility(View.GONE);
+                frameLayoutRestaurant.setVisibility(View.VISIBLE);
+                horizontalScrollViewRestaurants.setVisibility(View.GONE);
+                horizontalScrollViewMarkets.setVisibility(View.GONE);
+                textViewRestaurants.setVisibility(View.GONE);
+                textViewMarkets.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_restaurant, new RestaurantFragment()).commit();
+            }
+        });
     }
     private void init() {
-        //listViewRestaurants = findViewById(R.id.listViewRestaurants);
-       // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        //linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
-        //listViewRestaurants.setAdapter(new RestaurantAdapter());
         navigationView = findViewById(R.id.navigationView);
         toolbar = findViewById(R.id.toolBar);
         frameLayoutAccount = findViewById(R.id.fragment_container_account);
         frameLayoutSearch = findViewById(R.id.fragment_container_search);
+        frameLayoutRestaurant = findViewById(R.id.fragment_container_restaurant);
         drawerLayout = findViewById(R.id.my_drawer_layout);
         textViewRestaurants = findViewById(R.id.textViewRestaurants);
+        cardRestaurant1 = findViewById(R.id.cardRestaurant1);
+        cardRestaurant2 = findViewById(R.id.cardRestaurant2);
+        cardRestaurant3 = findViewById(R.id.cardRestaurant3);
+        cardRestaurant4 = findViewById(R.id.cardRestaurant4);
         textViewMarkets = findViewById(R.id.textViewMarkets);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.nav_open, R.string.nav_close);
         actionBarDrawerToggle.getDrawerArrowDrawable().setColor(Color.WHITE);
-        textViewRecommended1 = findViewById(R.id.textViewRecommended1);
-        textViewRecommended2 = findViewById(R.id.textViewRecommended2);
-        textViewRecommended3 = findViewById(R.id.textViewRecommended3);
-        textViewRecommended4 = findViewById(R.id.textViewRecommended4);
-        imageViewRecommended1 = findViewById(R.id.imageViewRecommended1);
-        imageViewRecommended2 = findViewById(R.id.imageViewRecommended2);
-        imageViewRecommended3 = findViewById(R.id.imageViewRecommended3);
-        imageViewRecommended4 = findViewById(R.id.imageViewRecommended4);
+        textViewRestaurant1 = findViewById(R.id.textViewRestaurant1);
+        textViewRestaurant2 = findViewById(R.id.textViewRestaurant2);
+        textViewRestaurant3 = findViewById(R.id.textViewRestaurant3);
+        textViewRestaurant4 = findViewById(R.id.textViewRestaurant4);
+        textviewRestaurantDescription1 = findViewById(R.id.textviewRestaurantDescription1);
+        textviewRestaurantDescription2 = findViewById(R.id.textviewRestaurantDescription2);
+        textviewRestaurantDescription3 = findViewById(R.id.textviewRestaurantDescription3);
+        textviewRestaurantDescription4 = findViewById(R.id.textviewRestaurantDescription4);
+        imageViewRestaurant1 = findViewById(R.id.imageViewRestaurant1);
+        imageViewRestaurant2 = findViewById(R.id.imageViewRestaurant2);
+        imageViewRestaurant3 = findViewById(R.id.imageViewRestaurant3);
+        imageViewRestaurant4 = findViewById(R.id.imageViewRestaurant4);
         horizontalScrollViewRestaurants = findViewById(R.id.horizontalScrollViewRestaurants);
         horizontalScrollViewMarkets = findViewById(R.id.horizontalScrollViewMarkets);
         alert = new AlertDialog.Builder(GorillaGoActivity.this);
@@ -157,26 +185,6 @@ public class GorillaGoActivity extends AppCompatActivity {
                 .setCancelable(false)
                 .create();
     }
-    /*private class RestaurantAdapter extends ArrayAdapter<Restaurant> {
-        public RestaurantAdapter() {
-            super(GorillaGoActivity.this, R.layout.restaurantadapter, restaurants);
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            LayoutInflater inflater = getLayoutInflater();
-            View view = inflater.inflate(R.layout.restaurantadapter, null, false);
-            Restaurant actualRestaurant = restaurants.get(position);
-            TextView textViewRecommended = view.findViewById(R.id.textViewRecommended);
-            ImageView imageViewRecommended = view.findViewById(R.id.imageViewRecommended);
-            textViewRecommended.setText(actualRestaurant.getName());
-            Picasso.get().load(actualRestaurant.getUrl()).into(imageViewRecommended);
-            System.out.println(actualRestaurant.getName());
-            System.out.println(actualRestaurant);
-            return view;
-        }
-    }*/
     private class RequestTask extends AsyncTask<Void, Void, Response> {
         String requestUrl;
         String requestType;
@@ -217,22 +225,18 @@ public class GorillaGoActivity extends AppCompatActivity {
             } else {
                 switch (requestType) {
                     case "GET":
-                        Restaurant[] restaurantsArray = converter.fromJson(response.getContent(), Restaurant[].class);
+                        restaurantsArray = converter.fromJson(response.getContent(), Restaurant[].class);
                         restaurants.clear();
                         restaurants.addAll(Arrays.asList(restaurantsArray));
-                        for (int i = 0; i < restaurantsArray.length; i++) {
-                            restaurantArray[i] = restaurantsArray[i];
-                            textViewRecommended1.setText(restaurantArray[i].getName());
-                            Picasso.get().load(restaurantArray[i].getUrl()).into(imageViewRecommended1);
-                        }
-                        textViewRecommended1.setText(restaurantArray[0].getName());
-                        Picasso.get().load(restaurantArray[0].getUrl()).into(imageViewRecommended1);
-                        textViewRecommended2.setText(restaurantArray[1].getName());
-                        Picasso.get().load(restaurantArray[1].getUrl()).into(imageViewRecommended2);
-                        textViewRecommended3.setText(restaurantArray[2].getName());
-                        Picasso.get().load(restaurantArray[2].getUrl()).into(imageViewRecommended3);
-                        textViewRecommended4.setText(restaurantArray[3].getName());
-                        Picasso.get().load(restaurantArray[3].getUrl()).into(imageViewRecommended4);
+
+                        textViewRestaurant1.setText(restaurantsArray[0].getName());
+                        Picasso.get().load(restaurantsArray[0].getUrl()).into(imageViewRestaurant1);
+                        textViewRestaurant2.setText(restaurantsArray[1].getName());
+                        Picasso.get().load(restaurantsArray[1].getUrl()).into(imageViewRestaurant2);
+                        textViewRestaurant3.setText(restaurantsArray[2].getName());
+                        Picasso.get().load(restaurantsArray[2].getUrl()).into(imageViewRestaurant3);
+                        textViewRestaurant4.setText(restaurantsArray[3].getName());
+                        Picasso.get().load(restaurantsArray[3].getUrl()).into(imageViewRestaurant4);
                         break;
                 }
             }

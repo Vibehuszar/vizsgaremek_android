@@ -1,5 +1,6 @@
-package hu.petrik.gorillago_android;
+package hu.petrik.gorillago_android.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.SearchView;
@@ -8,6 +9,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import hu.petrik.gorillago_android.R;
 
 
 public class SearchFragment extends Fragment {
@@ -37,5 +43,7 @@ public class SearchFragment extends Fragment {
     }
     public void init(View view){
         searchView = view.findViewById(R.id.searchView);
+
+
     }
 }
