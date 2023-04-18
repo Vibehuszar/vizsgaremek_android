@@ -48,13 +48,11 @@ public class RestaurantFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_restaurant, container, false);
         SharedPreferences sharedPreferences= getActivity().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
         restaurantId = sharedPreferences.getInt("restaurantId",0);
-        /*RequestTask task = new RequestTask(url_two + "/" + restaurantId, "GET");
+        RequestTaskRestaurant task = new RequestTaskRestaurant(url_two + "/" + restaurantId, "GET");
         urlSelector = url + "/" + restaurantId;
-        System.out.println(urlSelector);
-        task.execute();*/
+        task.execute();
         RequestTask task_two = new RequestTask(url + "/" + restaurantId + "/menus", "GET");
         urlSelector = url + "/" + restaurantId + "/menus";
-        System.out.println(urlSelector);
         task_two.execute();
         init(view);
         return view;
@@ -94,6 +92,57 @@ public class RestaurantFragment extends Fragment {
             Log.d("MenuAdapter", "getView called for position " + position);
             Log.d("MenuAdapter", "Item added");
             return convertView;
+        }
+    }
+    private class RequestTaskRestaurant extends AsyncTask<Void, Void, Response> {
+        String requestUrl;
+        String requestType;
+        String requestParams;
+
+        public RequestTaskRestaurant(String requestUrl, String requestType, String requestParams) {
+            this.requestUrl = requestUrl;
+            this.requestType = requestType;
+            this.requestParams = requestParams;
+        }
+
+        public RequestTaskRestaurant(String requestUrl, String requestType) {
+            this.requestUrl = requestUrl;
+            this.requestType = requestType;
+        }
+
+        @Override
+        protected Response doInBackground(Void... voids) {
+            Response response = null;
+            try {
+                switch (requestType) {
+                    case "GET":
+                        response = RequestHandler.get(requestUrl);
+                        break;
+                    case "POST":
+                        response = RequestHandler.post(requestUrl, requestParams);
+                        break;
+                }
+            } catch (IOException e) {
+                Toast.makeText(getActivity(),
+                        e.toString(), Toast.LENGTH_SHORT).show();
+            }
+            return response;
+        }
+        @Override
+        protected void onPostExecute(Response response) {
+            super.onPostExecute(response);
+            Gson converter = new Gson();
+            if (response == null || response.getResponseCode() >= 400) {
+                Toast.makeText(getActivity(), "Hiba a lekérdezés során", Toast.LENGTH_SHORT).show();
+            } else {
+                switch (requestType) {
+                    case "GET":
+                        Restaurant restaurant = converter.fromJson(response.getContent(), Restaurant.class);
+                        textViewRestaurantName.setText(restaurant.getName());
+                        Picasso.get().load(restaurant.getUrl()).into(imageViewRestaurantImage);
+                        break;
+                }
+            }
         }
     }
     private class RequestTask extends AsyncTask<Void, Void, Response> {
@@ -139,16 +188,10 @@ public class RestaurantFragment extends Fragment {
             } else {
                 switch (requestType) {
                     case "GET":
-                            if (urlSelector.endsWith("/menus")){
-                                System.out.println("true");
                                 MenuItem[] menuItemsArray = converter.fromJson(response.getContent(), MenuItem[].class);
                                 menuItems.clear();
                                 menuItems.addAll(Arrays.asList(menuItemsArray));
                                 initListView();
-                            }
-                            else if (urlSelector.endsWith(String.valueOf(restaurantId))){
-                                System.out.println("asd");
-                            }
                         break;
                 }
             }

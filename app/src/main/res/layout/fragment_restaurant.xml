@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="150dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/pizzaking" />
+            />
 
         <TextView
             android:id="@+id/textViewRestaurantName"
