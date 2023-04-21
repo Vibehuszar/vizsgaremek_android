@@ -48,15 +48,55 @@
                     android:textSize="14sp"
                     />
             </LinearLayout>
-            <Button
-                android:id="@+id/addToCartButton"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add to Cart"
-                android:textAllCaps="false"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:backgroundTint="@color/navbarpurple"/>
+                android:layout_marginRight="25dp"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <Button
+                        android:id="@+id/buttonNegative"
+                        android:layout_width="35dp"
+                        android:layout_height="40dp"
+                        android:text="-"
+                        android:textAllCaps="false"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:backgroundTint="@color/navbarpurple"/>
+                    <TextView
+                        android:id="@+id/textViewQuantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:padding="8dp"/>
+                    <Button
+                        android:id="@+id/buttonPlus"
+                        android:layout_width="35dp"
+                        android:layout_height="40dp"
+                        android:text="+"
+                        android:textAllCaps="false"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:backgroundTint="@color/navbarpurple"/>
+                </LinearLayout>
+                <Button
+                    android:id="@+id/buttonAddToCart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add to Cart"
+                    android:textAllCaps="false"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:backgroundTint="@color/navbarpurple"/>
+            </LinearLayout>
+
+
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

@@ -1,5 +1,7 @@
 package hu.petrik.gorillago_android.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,6 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +47,7 @@ public class SearchFragment extends Fragment {
     private ListView listViewSearch;
     private List<Restaurant> restaurants = new ArrayList<>();
     private String url = "http://10.0.2.2:3000/restaurants/search";
+    private String url_restaurant = "http://10.0.2.2:3000/restaurants/search";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
@@ -58,12 +64,12 @@ public class SearchFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String  query) {
-                /*if (query.equals("")){
+                if (query.equals("")){
                     restaurants.clear();
                 }
                 Toast.makeText(getActivity(), query, Toast.LENGTH_SHORT).show();
                 RequestTask task = new RequestTask(url + "/" + query, "GET");
-                task.execute();*/
+                task.execute();
                 return true;
             }
         });
@@ -98,6 +104,23 @@ public class SearchFragment extends Fragment {
             Picasso.get().load(actualRestaurant.getUrl()).into(imageViewSearchRestaurant);
             textViewSearchRestaurant.setText(actualRestaurant.getName());
             //textViewSearchDescription.setText(actualRestaurant.getDes());
+            cardViewSearchRestaurant.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                        Restaurant restaurant = restaurants.get(position);
+                        int restaurantId = restaurant.getId();
+                        SharedPreferences sharedPreferences= getActivity().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putInt("restaurantId", restaurantId);
+                        editor.commit();
+                        System.out.println(restaurantId);
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment_container_search, new RestaurantFragment());
+                        fragmentTransaction.commit();
+                }
+            });
+
 
             return convertView;
         }

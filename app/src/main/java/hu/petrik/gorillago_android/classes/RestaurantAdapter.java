@@ -39,7 +39,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
             imageViewRestaurant = itemView.findViewById(R.id.imageViewRestaurant);
             textViewRestaurant = itemView.findViewById(R.id.textViewRestaurant);
             cardViewRestaurant = itemView.findViewById(R.id.cardViewRestaurant);
-
             cardViewRestaurant.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

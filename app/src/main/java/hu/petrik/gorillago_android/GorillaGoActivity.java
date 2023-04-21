@@ -73,7 +73,6 @@ public class GorillaGoActivity extends AppCompatActivity {
         //System.out.println(firstName);
         RequestTask task = new RequestTask(url, "GET");
         task.execute();
-        System.out.println("cadaudhadhas" +restaurants.size());
         init();
         textViewFirstName.setText(firstName);
         System.out.println(restaurants.size());
