@@ -11,12 +11,12 @@
         android:layout_marginBottom="20dp"
         android:text="Keresztnév"
         android:textSize="20dp"
-        android:id="@+id/textViewHeader" />
+        android:id="@+id/textViewFirstName" />
     
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_below="@id/textViewHeader"
+        android:layout_below="@id/textViewFirstName"
         android:background="@color/navbarpurple"
         />
 

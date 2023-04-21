@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -39,7 +40,6 @@ public class RestaurantFragment extends Fragment {
     private List<MenuItem> menuItems = new ArrayList<>();
     private String url = "http://10.0.2.2:3000/restaurants";
     private String url_two = "http://10.0.2.2:3000/restaurant";
-    private String urlSelector;
     private int restaurantId;
 
     @Override
@@ -49,10 +49,8 @@ public class RestaurantFragment extends Fragment {
         SharedPreferences sharedPreferences= getActivity().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
         restaurantId = sharedPreferences.getInt("restaurantId",0);
         RequestTaskRestaurant task = new RequestTaskRestaurant(url_two + "/" + restaurantId, "GET");
-        urlSelector = url + "/" + restaurantId;
         task.execute();
         RequestTask task_two = new RequestTask(url + "/" + restaurantId + "/menus", "GET");
-        urlSelector = url + "/" + restaurantId + "/menus";
         task_two.execute();
         init(view);
         return view;
@@ -85,12 +83,13 @@ public class RestaurantFragment extends Fragment {
             TextView textViewItemName = convertView.findViewById(R.id.item_name);
             TextView textViewItemDescription = convertView.findViewById(R.id.item_description);
             TextView textViewItemPrice = convertView.findViewById(R.id.item_price);
+            Button addToCartButton = convertView.findViewById(R.id.addToCartButton);
             Picasso.get().load(actualMenu.getUrl()).into(imageViewItem);
             textViewItemName.setText(actualMenu.getName());
             textViewItemDescription.setText(actualMenu.getDescription());
             textViewItemPrice.setText(String.valueOf(actualMenu.getPrice()));
-            Log.d("MenuAdapter", "getView called for position " + position);
-            Log.d("MenuAdapter", "Item added");
+            //Log.d("MenuAdapter", "getView called for position " + position);
+            //Log.d("MenuAdapter", "Item added");
             return convertView;
         }
     }

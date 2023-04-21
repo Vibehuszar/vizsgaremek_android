@@ -1,12 +1,15 @@
 package hu.petrik.gorillago_android;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,9 +18,13 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -36,20 +43,13 @@ import java.util.Arrays;
 import java.util.List;
 
 import hu.petrik.gorillago_android.classes.Restaurant;
+import hu.petrik.gorillago_android.classes.RestaurantAdapter;
 import hu.petrik.gorillago_android.fragments.AccountFragment;
 import hu.petrik.gorillago_android.fragments.RestaurantFragment;
 import hu.petrik.gorillago_android.fragments.SearchFragment;
 
 public class GorillaGoActivity extends AppCompatActivity {
-    private TextView textViewRestaurant1, textViewRestaurant2, textViewRestaurant3, textViewRestaurant4,
-            textviewRestaurantDescription1, textviewRestaurantDescription2, textviewRestaurantDescription3, textviewRestaurantDescription4,
-            textViewMarket1, textViewMarket2, textViewMarket3, textViewMarket4,
-            textviewMarketDescription1, textviewMarketDescription2, textviewMarketDescription3, textviewMarketDescription4;
-    private ImageView imageViewRestaurant1, imageViewRestaurant2, imageViewRestaurant3, imageViewRestaurant4,
-            imageViewMarket1, imageViewMarket2, imageViewMarket3, imageViewMarket4;
-    private HorizontalScrollView horizontalScrollViewRestaurants, horizontalScrollViewMarkets ;
-    private List<Restaurant> restaurants = new ArrayList<>();
-    private Restaurant[] restaurantsArray = new Restaurant[5];
+    private TextView textViewFirstName;
     private AlertDialog.Builder alert;
     private String url = "http://10.0.2.2:3000/restaurants";
     private DrawerLayout drawerLayout;
@@ -57,16 +57,26 @@ public class GorillaGoActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private FrameLayout frameLayoutAccount, frameLayoutSearch, frameLayoutRestaurant;
     private NavigationView navigationView;
+    private View headerView;
     private TextView textViewRestaurants, textViewMarkets;
-    private MaterialCardView cardRestaurant1, cardRestaurant2, cardRestaurant3, cardRestaurant4;
+
+    private RecyclerView recyclerViewRestaurants, recyclerViewMarkets;
+    private RestaurantAdapter restaurantAdapter;
+    private List<Restaurant> restaurants = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gorilla_go);
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+        String firstName = sharedPreferences.getString("firstName", "");
+        //System.out.println(firstName);
         RequestTask task = new RequestTask(url, "GET");
         task.execute();
+        System.out.println("cadaudhadhas" +restaurants.size());
         init();
+        textViewFirstName.setText(firstName);
+        System.out.println(restaurants.size());
         getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -81,8 +91,8 @@ public class GorillaGoActivity extends AppCompatActivity {
                         frameLayoutAccount.setVisibility(View.GONE);
                         frameLayoutSearch.setVisibility(View.GONE);
                         frameLayoutRestaurant.setVisibility(View.GONE);
-                        horizontalScrollViewRestaurants.setVisibility(View.VISIBLE);
-                        horizontalScrollViewMarkets.setVisibility(View.VISIBLE);
+                        recyclerViewRestaurants.setVisibility(View.VISIBLE);
+                        recyclerViewMarkets.setVisibility(View.VISIBLE);
                         textViewRestaurants.setVisibility(View.VISIBLE);
                         textViewMarkets.setVisibility(View.VISIBLE);
                         break;
@@ -90,8 +100,8 @@ public class GorillaGoActivity extends AppCompatActivity {
                         frameLayoutAccount.setVisibility(View.VISIBLE);
                         frameLayoutSearch.setVisibility(View.GONE);
                         frameLayoutRestaurant.setVisibility(View.GONE);
-                        horizontalScrollViewRestaurants.setVisibility(View.GONE);
-                        horizontalScrollViewMarkets.setVisibility(View.GONE);
+                        recyclerViewRestaurants.setVisibility(View.GONE);
+                        recyclerViewMarkets.setVisibility(View.GONE);
                         textViewRestaurants.setVisibility(View.GONE);
                         textViewMarkets.setVisibility(View.GONE);
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_account, new AccountFragment()).commit();
@@ -103,8 +113,8 @@ public class GorillaGoActivity extends AppCompatActivity {
                         frameLayoutAccount.setVisibility(View.GONE);
                         frameLayoutSearch.setVisibility(View.VISIBLE);
                         frameLayoutRestaurant.setVisibility(View.GONE);
-                        horizontalScrollViewRestaurants.setVisibility(View.GONE);
-                        horizontalScrollViewMarkets.setVisibility(View.GONE);
+                        recyclerViewRestaurants.setVisibility(View.GONE);
+                        recyclerViewMarkets.setVisibility(View.GONE);
                         textViewRestaurants.setVisibility(View.GONE);
                         textViewMarkets.setVisibility(View.GONE);
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_search, new SearchFragment()).commit();
@@ -114,10 +124,16 @@ public class GorillaGoActivity extends AppCompatActivity {
                 return true;
             }
         });
-        cardRestaurant1.setOnClickListener(new View.OnClickListener() {
+    }
+    private void initRecyclerView() {
+        restaurantAdapter = new RestaurantAdapter(restaurants);
+        recyclerViewRestaurants.setAdapter(restaurantAdapter);
+
+        restaurantAdapter.setRestaurantClickListener(new RestaurantAdapter.RestaurantClickListener() {
             @Override
-            public void onClick(View view) {
-                int restaurantId = restaurantsArray[0].getId();
+            public void onRestaurantClick(int id) {
+                Log.d("RestaurantAdapter", "Clicked on restaurant with ID: " + id);
+                int restaurantId = id;
                 SharedPreferences sharedPreferences=getSharedPreferences("MyPref", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor=sharedPreferences.edit();
                 editor.putInt("restaurantId", restaurantId);
@@ -126,8 +142,8 @@ public class GorillaGoActivity extends AppCompatActivity {
                 frameLayoutAccount.setVisibility(View.GONE);
                 frameLayoutSearch.setVisibility(View.GONE);
                 frameLayoutRestaurant.setVisibility(View.VISIBLE);
-                horizontalScrollViewRestaurants.setVisibility(View.GONE);
-                horizontalScrollViewMarkets.setVisibility(View.GONE);
+                recyclerViewRestaurants.setVisibility(View.GONE);
+                recyclerViewMarkets.setVisibility(View.GONE);
                 textViewRestaurants.setVisibility(View.GONE);
                 textViewMarkets.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_restaurant, new RestaurantFragment()).commit();
@@ -135,34 +151,22 @@ public class GorillaGoActivity extends AppCompatActivity {
         });
     }
     private void init() {
+        recyclerViewRestaurants = findViewById(R.id.recyclerViewRestaurants);
+        recyclerViewMarkets = findViewById(R.id.recyclerViewMarkets);
+
+
         navigationView = findViewById(R.id.navigationView);
+        headerView = navigationView.getHeaderView(0);
+        textViewFirstName = headerView.findViewById(R.id.textViewFirstName);
         toolbar = findViewById(R.id.toolBar);
         frameLayoutAccount = findViewById(R.id.fragment_container_account);
         frameLayoutSearch = findViewById(R.id.fragment_container_search);
         frameLayoutRestaurant = findViewById(R.id.fragment_container_restaurant);
         drawerLayout = findViewById(R.id.my_drawer_layout);
         textViewRestaurants = findViewById(R.id.textViewRestaurants);
-        cardRestaurant1 = findViewById(R.id.cardRestaurant1);
-        cardRestaurant2 = findViewById(R.id.cardRestaurant2);
-        cardRestaurant3 = findViewById(R.id.cardRestaurant3);
-        cardRestaurant4 = findViewById(R.id.cardRestaurant4);
         textViewMarkets = findViewById(R.id.textViewMarkets);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.nav_open, R.string.nav_close);
         actionBarDrawerToggle.getDrawerArrowDrawable().setColor(Color.WHITE);
-        textViewRestaurant1 = findViewById(R.id.textViewRestaurant1);
-        textViewRestaurant2 = findViewById(R.id.textViewRestaurant2);
-        textViewRestaurant3 = findViewById(R.id.textViewRestaurant3);
-        textViewRestaurant4 = findViewById(R.id.textViewRestaurant4);
-        textviewRestaurantDescription1 = findViewById(R.id.textviewRestaurantDescription1);
-        textviewRestaurantDescription2 = findViewById(R.id.textviewRestaurantDescription2);
-        textviewRestaurantDescription3 = findViewById(R.id.textviewRestaurantDescription3);
-        textviewRestaurantDescription4 = findViewById(R.id.textviewRestaurantDescription4);
-        imageViewRestaurant1 = findViewById(R.id.imageViewRestaurant1);
-        imageViewRestaurant2 = findViewById(R.id.imageViewRestaurant2);
-        imageViewRestaurant3 = findViewById(R.id.imageViewRestaurant3);
-        imageViewRestaurant4 = findViewById(R.id.imageViewRestaurant4);
-        horizontalScrollViewRestaurants = findViewById(R.id.horizontalScrollViewRestaurants);
-        horizontalScrollViewMarkets = findViewById(R.id.horizontalScrollViewMarkets);
         alert = new AlertDialog.Builder(GorillaGoActivity.this);
         alert.setMessage("Biztos ki akar jelentkezni?")
                 .setPositiveButton("Nem", new DialogInterface.OnClickListener(){
@@ -177,6 +181,7 @@ public class GorillaGoActivity extends AppCompatActivity {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.remove("token");
                         editor.remove("userId");
+                        editor.remove("firstName");
                         editor.commit();
                         startActivity(new Intent(GorillaGoActivity.this, MainActivity.class));
                         finish();
@@ -185,6 +190,7 @@ public class GorillaGoActivity extends AppCompatActivity {
                 .setCancelable(false)
                 .create();
     }
+
     private class RequestTask extends AsyncTask<Void, Void, Response> {
         String requestUrl;
         String requestType;
@@ -225,18 +231,11 @@ public class GorillaGoActivity extends AppCompatActivity {
             } else {
                 switch (requestType) {
                     case "GET":
-                        restaurantsArray = converter.fromJson(response.getContent(), Restaurant[].class);
+                        Restaurant[] restaurantsArray = converter.fromJson(response.getContent(), Restaurant[].class);
                         restaurants.clear();
                         restaurants.addAll(Arrays.asList(restaurantsArray));
-
-                        textViewRestaurant1.setText(restaurantsArray[0].getName());
-                        Picasso.get().load(restaurantsArray[0].getUrl()).into(imageViewRestaurant1);
-                        textViewRestaurant2.setText(restaurantsArray[1].getName());
-                        Picasso.get().load(restaurantsArray[1].getUrl()).into(imageViewRestaurant2);
-                        textViewRestaurant3.setText(restaurantsArray[2].getName());
-                        Picasso.get().load(restaurantsArray[2].getUrl()).into(imageViewRestaurant3);
-                        textViewRestaurant4.setText(restaurantsArray[3].getName());
-                        Picasso.get().load(restaurantsArray[3].getUrl()).into(imageViewRestaurant4);
+                        System.out.println(restaurants.size());
+                        initRecyclerView();
                         break;
                 }
             }

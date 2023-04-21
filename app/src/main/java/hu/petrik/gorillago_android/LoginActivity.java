@@ -152,9 +152,16 @@ public class LoginActivity extends AppCompatActivity {
                         User user = converter.fromJson(
                                 response.getContent(), User.class);
                         if (user == null){
-                           // Toast.makeText(LoginActivity.this, "Ilyen email cím már létezik", Toast.LENGTH_SHORT).show();
                             inputLoginEmailLayout.setError("Ilyen email címmel nem létezik felhasználó.");
                             return; // megszakítás
+                        }
+                        else {
+                            String firstName = user.getFirstName();
+                            SharedPreferences sharedPreferences=getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor=sharedPreferences.edit();
+                            editor.putString("firstName", firstName);
+                            editor.commit();
+                            System.out.println(firstName);
                         }
                         break;
                     case "POST":

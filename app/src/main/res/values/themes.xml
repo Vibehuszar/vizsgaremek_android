@@ -19,6 +19,7 @@
         <item name="android:textColor"> @color/white</item>
         <item name="android:textColorHint"> @color/white </item>
         <item name="hintTextColor"> @color/white </item>
+        <item name="android:editTextColor">@android:color/white</item>
     </style>
     
     <style name="Theme.GorillaGo_android.NoActionBarAndStatusBar">
@@ -33,5 +34,23 @@
         <item name="android:background">@color/navbarpurple</item>
         <item name="android:queryBackground">@null</item>
         <item name="android:iconifiedByDefault">false</item>
+        <item name="android:editTextColor">@android:color/white</item>
+        <item name="android:textColorHint">@android:color/white</item>
+    </style>
+
+    <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <!-- Change the search icon color to white -->
+        <item name="android:searchIcon">@drawable/ic_search</item>
+        <!-- Change the clear icon color to white -->
+        <item name="android:closeIcon">@drawable/ic_close</item>
+        <!-- Change the text color to white -->
+        <item name="android:textColor">@android:color/white</item>
+        <!-- Change the hint text color to white -->
+        <item name="android:textColorHint">@android:color/white</item>
+        <!-- Change the color of the underline -->
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="android:iconifiedByDefault">false</item>
+        <item name="android:editTextColor">@android:color/white</item>
+        <item name="android:tint">@android:color/white</item>
     </style>
 </resources>
