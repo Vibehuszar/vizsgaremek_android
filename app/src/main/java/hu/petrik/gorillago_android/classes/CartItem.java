@@ -1,20 +1,32 @@
 package hu.petrik.gorillago_android.classes;
 
 public class CartItem {
-    private int menuId;
+    private String url;
+    private String name;
     private int pricePerItem;
     private int quantity;
-    public CartItem(int menuId, int pricePerItem, int quantity) {
-        this.menuId = menuId;
+
+    public CartItem(String url, String name, int pricePerItem, int quantity) {
+        this.url = url;
+        this.name = name;
         this.pricePerItem = pricePerItem;
         this.quantity = quantity;
     }
-    public int getMenuId() {
-        return menuId;
+
+    public String getUrl() {
+        return url;
     }
 
-    public void setMenuId(int menuId) {
-        this.menuId = menuId;
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getPricePerItem() {

@@ -1,11 +1,9 @@
 package hu.petrik.gorillago_android.fragments;
 import static android.content.Context.MODE_PRIVATE;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,30 +16,19 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import hu.petrik.gorillago_android.GorillaGoActivity;
 import hu.petrik.gorillago_android.R;
-import hu.petrik.gorillago_android.RegistrationActivity;
 import hu.petrik.gorillago_android.RequestHandler;
 import hu.petrik.gorillago_android.Response;
-import hu.petrik.gorillago_android.classes.Cart;
-import hu.petrik.gorillago_android.classes.CartItem;
 import hu.petrik.gorillago_android.classes.MenuItem;
 import hu.petrik.gorillago_android.classes.Restaurant;
 
@@ -142,28 +129,26 @@ public class RestaurantFragment extends Fragment {
             buttonaddToCart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int menuId = actualMenu.getId();
-                    Cart cart = new Cart(view.getContext());
-                    CartItem item = new CartItem(menuId, actualMenu.getPrice(), quantityMap.get(actualMenu));
-                    cart.addItem(item);
-                    int totalPrice = cart.getTotalPrice(); // get the total price
-                    System.out.println("Total Price: " + totalPrice); // print the total price
-                    List<CartItem> items = cart.getItems();
-                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("shopping_cart", MODE_PRIVATE);
-                    String cartJson = sharedPreferences.getString("cart_items", "");
-                    if (!cartJson.isEmpty()) {
-                        try {
-                            JSONArray cartArray = new JSONArray(cartJson);
-                            for (int i = 0; i < cartArray.length(); i++) {
-                                JSONObject itemObject = cartArray.getJSONObject(i);
-                                int menuIdCart = itemObject.getInt("menuId");
-                                int quantity = itemObject.getInt("quantity");
-                                int price = itemObject.getInt("pricePerItem");
-                                System.out.println("Menu ID: " + menuIdCart + ", Quantity: " + quantity + ", Price: " + price);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    SharedPreferences preferences = getActivity().getSharedPreferences("shopping_cart", MODE_PRIVATE);
+                    int totalPriceCart = preferences.getInt("total_price", 0);
+                    String name = actualMenu.getName();
+                    String url = actualMenu.getUrl();
+                    int quantity = quantityMap.get(actualMenu);
+                    int totalPrice = actualMenu.getPrice() * quantity; // get the total price
+                    if (preferences.contains(name)){
+                        String before = preferences.getString(name, null);
+                        String all[] = before.split(",");
+                        int quant = Integer.parseInt(all[0]);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString(name, (quantity+quant) + "," + actualMenu.getPrice() + "," + url);
+                        editor.putInt("total_price", totalPrice + totalPriceCart);
+                        editor.commit();
+                    }else{
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString(name, quantity + "," + actualMenu.getPrice() + "," + url);
+                        editor.putInt("total_price", totalPrice + totalPriceCart);
+                        editor.commit();
+                        System.out.println("Total Price: " + totalPrice); // print the total price
                     }
                 }
             });
