@@ -92,24 +92,12 @@ public class RestaurantFragment extends Fragment {
             textViewItemName.setText(actualMenu.getName());
             textViewItemDescription.setText(actualMenu.getDescription());
             textViewItemPrice.setText(String.valueOf(actualMenu.getPrice()));
-            if (quantityMap.containsKey(actualMenu)) {
-                int quantity = quantityMap.get(actualMenu);
-                textViewQuantity.setText(String.valueOf(quantity));
-            } else {
-                // If the quantity hasn't been set, default to 0
-                textViewQuantity.setText("0");
-            }
-
+            textViewQuantity.setText("0");
             buttonPlus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int quantity;
-                    if (quantityMap.containsKey(actualMenu)) {
-                        quantity = quantityMap.get(actualMenu) + 1;
-                    } else {
-                        quantity = 1;
-                    }
-                    quantityMap.put(actualMenu, quantity);
+                    int quantity = Integer.parseInt(textViewQuantity.getText().toString());
+                    quantity++;
                     textViewQuantity.setText(String.valueOf(quantity));
                 }
             });
@@ -117,12 +105,10 @@ public class RestaurantFragment extends Fragment {
             buttonNegative.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (quantityMap.containsKey(actualMenu)) {
-                        int quantity = quantityMap.get(actualMenu);
-                        if (quantity > 0) {
-                            quantityMap.put(actualMenu, quantity - 1);
-                            textViewQuantity.setText(String.valueOf(quantity - 1));
-                        }
+                    int quantity = Integer.parseInt(textViewQuantity.getText().toString());
+                    if (quantity>0){
+                        quantity--;
+                        textViewQuantity.setText(String.valueOf(quantity));
                     }
                 }
             });
@@ -133,8 +119,8 @@ public class RestaurantFragment extends Fragment {
                     int totalPriceCart = preferences.getInt("total_price", 0);
                     String name = actualMenu.getName();
                     String url = actualMenu.getUrl();
-                    int quantity = quantityMap.get(actualMenu);
-                    int totalPrice = actualMenu.getPrice() * quantity; // get the total price
+                    int quantity = Integer.parseInt(textViewQuantity.getText().toString());
+                    int totalPrice = actualMenu.getPrice() * quantity;
                     if (preferences.contains(name)){
                         String before = preferences.getString(name, null);
                         String all[] = before.split(",");
@@ -148,7 +134,6 @@ public class RestaurantFragment extends Fragment {
                         editor.putString(name, quantity + "," + actualMenu.getPrice() + "," + url);
                         editor.putInt("total_price", totalPrice + totalPriceCart);
                         editor.commit();
-                        System.out.println("Total Price: " + totalPrice); // print the total price
                     }
                 }
             });
