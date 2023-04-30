@@ -157,7 +157,6 @@ public class GorillaGoActivity extends AppCompatActivity {
         restaurantAdapter.setRestaurantClickListener(new RestaurantAdapter.RestaurantClickListener() {
             @Override
             public void onRestaurantClick(int id) {
-                Log.d("RestaurantAdapter", "Clicked on restaurant with ID: " + id);
                 int restaurantId = id;
                 SharedPreferences sharedPreferences=getSharedPreferences("MyPref", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor=sharedPreferences.edit();
@@ -178,7 +177,6 @@ public class GorillaGoActivity extends AppCompatActivity {
         allRestaurantAdapter.setAllRestaurantClickListener(new AllRestaurantAdapter.AllRestaurantClickListener() {
             @Override
             public void onRestaurantClick(int id) {
-                Log.d("RestaurantAdapter", "Clicked on restaurant with ID: " + id);
                 int restaurantId = id;
                 SharedPreferences sharedPreferences=getSharedPreferences("MyPref", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor=sharedPreferences.edit();
