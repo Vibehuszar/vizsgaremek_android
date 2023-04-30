@@ -32,6 +32,8 @@ public class RegistrationActivity extends AppCompatActivity {
     private Button buttonRegistration;
     private TextInputEditText inputEmail, inputPassword, inputRePassword;
     private TextInputLayout inputEmailLayout, inputPasswordLayout, inputRePasswordLayout;
+    private Toast exitToast;
+    private long backPressedTime;
     private String url = "http://10.0.2.2:3000/register";
     private String url_get = "http://10.0.2.2:3000/userbyemail";
 
@@ -54,6 +56,18 @@ public class RegistrationActivity extends AppCompatActivity {
                 registration();
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            exitToast.cancel();
+            super.onBackPressed();
+            return;
+        } else {
+            exitToast = Toast.makeText(this, "Nyomja meg mégegyszer a kilépéshez", Toast.LENGTH_SHORT);
+            exitToast.show();
+        }
+        backPressedTime = System.currentTimeMillis();
     }
 
     private void registration(){

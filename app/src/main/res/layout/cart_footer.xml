@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:id="@+id/Footer"
@@ -20,14 +21,17 @@
             android:text="Total Price"
             android:gravity="start"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonProceed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
             android:text="Tovább"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            android:padding="16dp"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            app:cornerRadius="10sp"
+            app:strokeColor="@color/navbarpurple"
+            app:strokeWidth="1sp"
             android:layout_gravity="end"/>
 
     </LinearLayout>

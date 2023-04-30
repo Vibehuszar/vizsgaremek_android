@@ -117,6 +117,7 @@ public class SearchFragment extends Fragment {
                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.fragment_container_search, new RestaurantFragment());
+                        fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
                 }
             });

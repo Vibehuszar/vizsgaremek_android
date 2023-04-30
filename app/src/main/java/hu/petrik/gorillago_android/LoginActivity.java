@@ -33,6 +33,8 @@ public class LoginActivity extends AppCompatActivity {
     private MaterialToolbar buttonBack;
     private TextInputEditText inputEmail, inputPassword;
     private TextInputLayout inputLoginEmailLayout, inputLoginPasswordLayout;
+    private Toast exitToast;
+    private long backPressedTime;
     private String url = "http://10.0.2.2:3000/login";
     private String url_get = "http://10.0.2.2:3000/userbyemail";
 
@@ -73,6 +75,18 @@ public class LoginActivity extends AppCompatActivity {
         Gson jsonConverter = new Gson();
         RequestTask task = new RequestTask(url, "POST", jsonConverter.toJson(user));
         task.execute();
+    }
+    @Override
+    public void onBackPressed() {
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            exitToast.cancel();
+            super.onBackPressed();
+            return;
+        } else {
+            exitToast = Toast.makeText(this, "Nyomja meg mégegyszer a kilépéshez", Toast.LENGTH_SHORT);
+            exitToast.show();
+        }
+        backPressedTime = System.currentTimeMillis();
     }
 
 
@@ -170,14 +184,15 @@ public class LoginActivity extends AppCompatActivity {
                                 response.getContent(), Token.class);
                         String tokenString = token.getToken();
                         int userId = token.getId();
-                        Toast.makeText(LoginActivity.this,
-                                String.valueOf(userId), Toast.LENGTH_SHORT).show();
                         SharedPreferences sharedPreferences=getSharedPreferences("MyPref", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor=sharedPreferences.edit();
                         editor.putString("token", tokenString);
                         editor.putInt("userId", userId);
+                        editor.putBoolean("canOrder", false);
                         editor.commit();
-                        startActivity(new Intent(LoginActivity.this, GorillaGoActivity.class));
+                        Intent intent = new Intent(LoginActivity.this, GorillaGoActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                         finish();
                 }
             }

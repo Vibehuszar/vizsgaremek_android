@@ -1,6 +1,5 @@
 package hu.petrik.gorillago_android.classes;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,14 +15,14 @@ import java.util.List;
 
 import hu.petrik.gorillago_android.R;
 
-public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder> {
+public class AllRestaurantAdapter extends RecyclerView.Adapter<AllRestaurantAdapter.ViewHolder> {
     private List<Restaurant> restaurants;
-    private RestaurantClickListener restaurantClickListener;
-    public interface RestaurantClickListener {
+    private AllRestaurantClickListener allRestaurantClickListener;
+    public interface AllRestaurantClickListener {
         void onRestaurantClick(int id);
     }
 
-    public RestaurantAdapter(List<Restaurant> restaurants) {
+    public AllRestaurantAdapter(List<Restaurant> restaurants) {
         this.restaurants = restaurants;
     }
 
@@ -36,29 +35,29 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
 
         public ViewHolder(View itemView) {
             super(itemView);
-            imageViewRestaurant = itemView.findViewById(R.id.imageViewRecommendedRestaurant);
-            textViewRestaurant = itemView.findViewById(R.id.textViewRecommendedRestaurant);
-            cardViewRestaurant = itemView.findViewById(R.id.cardViewRecommendedRestaurant);
+            imageViewRestaurant = itemView.findViewById(R.id.imageViewRestaurant);
+            textViewRestaurant = itemView.findViewById(R.id.textViewRestaurant);
+            cardViewRestaurant = itemView.findViewById(R.id.cardViewRestaurant);
             cardViewRestaurant.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION && restaurantClickListener != null) {
+                    if (position != RecyclerView.NO_POSITION && allRestaurantClickListener != null) {
                         Restaurant restaurant = restaurants.get(position);
                         int id = restaurant.getId();
-                        restaurantClickListener.onRestaurantClick(id);
+                        allRestaurantClickListener.onRestaurantClick(id);
                     }
                 }
             });
         }
     }
-    public void setRestaurantClickListener(RestaurantClickListener listener) {
-        this.restaurantClickListener = listener;
+    public void setAllRestaurantClickListener(AllRestaurantClickListener listener) {
+        this.allRestaurantClickListener = listener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recommendedrestaurantadapter, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.restaurantadapter, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
@@ -73,6 +72,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return 4;
+        return restaurants.size();
     }
 }

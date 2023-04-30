@@ -7,7 +7,6 @@
     tools:context=".LoginActivity"
     android:background="@drawable/bgcolor">
 
-
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/buttonBack"
         android:layout_width="match_parent"
@@ -15,102 +14,104 @@
         android:background="@android:color/transparent"
         app:titleTextColor="@color/white"
         app:navigationIcon="@drawable/baseline_arrowback"
-        app:contentInsetStart="0dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetEnd="0dp"
-        app:contentInsetRight="0dp"/>
+        app:contentInsetStart="0sp"
+        app:contentInsetLeft="0sp"
+        app:contentInsetEnd="0sp"
+        app:contentInsetRight="0sp"/>
 
-    <androidx.cardview.widget.CardView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        app:cardBackgroundColor="@android:color/transparent"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="0dp"
-        app:cardMaxElevation="12dp"
-        app:cardPreventCornerOverlap="true"
-        app:cardUseCompatPadding="true">
+        android:layout_height="match_parent"
+        android:layout_below="@id/buttonBack">
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="20dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="10sp"
+            android:layout_marginTop="10sp"
+            android:layout_marginEnd="10sp"
+            android:layout_marginBottom="10sp"
+            android:layout_gravity="center"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="20sp"
+            app:cardElevation="0sp"
+            app:cardMaxElevation="12sp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true">
 
-            <com.google.android.material.textfield.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:id="@+id/inputLoginEmailLayout"
-                app:boxBackgroundColor="@color/navbarpurple"
-                style="@style/EditTextHintColor"
-                app:boxCornerRadiusBottomEnd="20dp"
-                app:boxCornerRadiusBottomStart="20dp"
-                app:boxCornerRadiusTopEnd="20dp"
-                app:boxCornerRadiusTopStart="20dp"
-                app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp">
+                android:layout_height="match_parent"
+                android:layout_margin="20sp"
+                android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/inputLogin"
-                    android:hint="Email"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:textSize="16dp"
-                    android:textColor="@color/white"/>
+                    android:layout_marginBottom="20sp"
+                    android:id="@+id/inputLoginEmailLayout"
+                    app:boxBackgroundColor="@color/navbarpurple"
+                    style="@style/EditTextHintColor"
+                    app:boxCornerRadiusBottomEnd="20sp"
+                    app:boxCornerRadiusBottomStart="20sp"
+                    app:boxCornerRadiusTopEnd="20sp"
+                    app:boxCornerRadiusTopStart="20sp"
+                    app:boxStrokeWidth="0sp"
+                    app:boxStrokeWidthFocused="0sp">
 
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/inputLogin"
+                        android:hint="Email"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:id="@+id/inputLoginPasswordLayout"
-                app:boxBackgroundColor="@color/navbarpurple"
-                style="@style/EditTextHintColor"
-                app:boxCornerRadiusBottomEnd="20dp"
-                app:boxCornerRadiusBottomStart="20dp"
-                app:boxCornerRadiusTopEnd="20dp"
-                app:boxCornerRadiusTopStart="20dp"
-                app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp"
-                app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/white">
-
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/inputLoginPassword"
-                    android:hint="Jelszó"
-                    android:inputType="textPassword"
-                    android:textSize="16dp"
-                    android:textColor="@color/white"/>
+                    android:layout_marginBottom="20sp"
+                    android:id="@+id/inputLoginPasswordLayout"
+                    app:boxBackgroundColor="@color/navbarpurple"
+                    style="@style/EditTextHintColor"
+                    app:boxCornerRadiusBottomEnd="20sp"
+                    app:boxCornerRadiusBottomStart="20sp"
+                    app:boxCornerRadiusTopEnd="20sp"
+                    app:boxCornerRadiusTopStart="20sp"
+                    app:boxStrokeWidth="0sp"
+                    app:boxStrokeWidthFocused="0sp"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/white">
 
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/inputLoginPassword"
+                        android:hint="Jelszó"
+                        android:inputType="textPassword"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
-            </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonLogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@android:color/transparent"
+                    android:text="Bejelentkezés"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    app:cornerRadius="10sp"
+                    app:strokeColor="@color/navbarpurple"
+                    app:strokeWidth="1sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </ScrollView>
 
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonLogin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:backgroundTint="@android:color/transparent"
-                android:text="Bejelentkezés"
-                android:textAllCaps="false"
-                android:textSize="16dp"
-                app:cornerRadius="10dp"
-                app:strokeColor="@color/navbarpurple"
-                app:strokeWidth="1sp" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

@@ -34,12 +34,10 @@ import hu.petrik.gorillago_android.classes.User;
 
 public class AccountFragment extends Fragment {
 
-    TextView textViewAccount;
-    TextInputEditText editTextLastName, editTextFirstName, editTextEmail, editTextPhoneNumber ,editTextOldPassword, editTextNewPassword;
-
-    TextInputLayout textInputNewPasswordLayout;
-
-    MaterialButton buttonSavePersonalInfo, buttonSavePassword;
+    private TextView textViewAccount;
+    private TextInputEditText editTextLastName, editTextFirstName, editTextEmail, editTextPhoneNumber ,editTextOldPassword, editTextNewPassword;
+    private TextInputLayout textInputNewPasswordLayout, textInputEmailLayout;
+    private MaterialButton buttonSavePersonalInfo, buttonSavePassword;
     private String url = "http://10.0.2.2:3000/users";
     private String url_password = "http://10.0.2.2:3000/users/password";
 
@@ -68,19 +66,26 @@ public class AccountFragment extends Fragment {
     private void updatePersonalInfo(){
         SharedPreferences sharedPreferences= getActivity().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
         int userId = sharedPreferences.getInt("userId",0);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putBoolean("canOrder", true);
+        editor.commit();
         String lastName = editTextLastName.getText().toString().trim();
         String firstName = editTextFirstName.getText().toString().trim();
         String email = editTextEmail.getText().toString().trim();
         String phoneNumber = editTextPhoneNumber.getText().toString().trim();
-        UpdateUser updateUser = new UpdateUser(lastName, firstName, email, phoneNumber);
-        Gson jsonConverter = new Gson();
-        RequestTask task = new RequestTask(url + "/" + userId, "PUT", jsonConverter.toJson(updateUser));
-        task.execute();
-        refreshPage();
-        System.out.println(updateUser);
-        System.out.println(url + "/" + userId);
+        if (lastName.isEmpty() || firstName.isEmpty() ||email.isEmpty() || phoneNumber.isEmpty()){
+            Toast.makeText(getActivity(),"Minden mezőt ki kell tölteni", Toast.LENGTH_SHORT).show();
+        }else if(!email.contains("@")){
+            textInputEmailLayout.setError("Az email címnek tartalmaznia kell @ kakatert");
+        } else{
+            UpdateUser updateUser = new UpdateUser(lastName, firstName, email, phoneNumber);
+            Gson jsonConverter = new Gson();
+            RequestTask task = new RequestTask(url + "/" + userId, "PUT", jsonConverter.toJson(updateUser));
+            task.execute();
+            textInputEmailLayout.setError(null);
+            refreshPage();
+        }
     }
-
     private  void updatePassword(){
         SharedPreferences sharedPreferences= getActivity().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
         int userId = sharedPreferences.getInt("userId",0);
@@ -112,14 +117,13 @@ public class AccountFragment extends Fragment {
         System.out.println(jsonConverter.toJson(updateUserPassword));
         System.out.println(url_password + "/" + userId);
     }
-
     private void refreshPage(){
         SharedPreferences sharedPreferences= getActivity().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
         int userId = sharedPreferences.getInt("userId",0);
         RequestTask task = new RequestTask(url + "/" + userId, "GET");
         task.execute();
-    }
 
+    }
     public void init(View view){
         textViewAccount = view.findViewById(R.id.textViewAccount);
         editTextLastName = view.findViewById(R.id.editTextLastName);
@@ -131,6 +135,7 @@ public class AccountFragment extends Fragment {
         buttonSavePersonalInfo = view.findViewById(R.id.buttonSavePersonalInfo);
         buttonSavePassword = view.findViewById(R.id.buttonSavePassword);
         textInputNewPasswordLayout = view.findViewById(R.id.textInputNewPasswordLayout);
+        textInputEmailLayout = view.findViewById(R.id.textInputEmailLayout);
     }
     private class RequestTask extends AsyncTask<Void, Void, Response> {
         String requestUrl;
@@ -170,13 +175,7 @@ public class AccountFragment extends Fragment {
             super.onPostExecute(response);
             Gson converter = new Gson();
             if (response == null || response.getResponseCode() >= 400) {
-                if (response == null) {
-                    Log.e("TAG", "Response is null");
-                } else {
-                    Log.e("TAG", "Response code: " + response.getResponseCode());
-                    Log.e("TAG", "Response content: " + response.getContent());
-                }
-                Toast.makeText(getActivity(), "Hiba", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Hiba a lekérdezés során", Toast.LENGTH_SHORT).show();
             } else {
                 switch (requestType) {
                     case "GET":

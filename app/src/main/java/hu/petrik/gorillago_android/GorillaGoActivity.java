@@ -1,16 +1,15 @@
 package hu.petrik.gorillago_android;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,30 +18,20 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
-import com.squareup.picasso.Picasso;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import hu.petrik.gorillago_android.classes.AllRestaurantAdapter;
 import hu.petrik.gorillago_android.classes.Restaurant;
 import hu.petrik.gorillago_android.classes.RestaurantAdapter;
 import hu.petrik.gorillago_android.fragments.AccountFragment;
@@ -51,7 +40,6 @@ import hu.petrik.gorillago_android.fragments.RestaurantFragment;
 import hu.petrik.gorillago_android.fragments.SearchFragment;
 
 public class GorillaGoActivity extends AppCompatActivity {
-    private TextView textViewFirstName;
     private AlertDialog.Builder alert;
     private String url = "http://10.0.2.2:3000/restaurants";
     private DrawerLayout drawerLayout;
@@ -59,25 +47,22 @@ public class GorillaGoActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private FrameLayout frameLayoutAccount, frameLayoutSearch, frameLayoutRestaurant, frameLayoutCart;
     private NavigationView navigationView;
-    private View headerView;
     private TextView textViewRestaurants, textViewMarkets;
-    private RecyclerView recyclerViewRestaurants, recyclerViewMarkets;
+    private RecyclerView recyclerViewRestaurants, recyclerViewAllRestaurant;
     private RestaurantAdapter restaurantAdapter;
+    private AllRestaurantAdapter allRestaurantAdapter;
     private List<Restaurant> restaurants = new ArrayList<>();
+    private Toast exitToast;
+    private long backPressedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gorilla_go);
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPref", Context.MODE_PRIVATE);
-        String firstName = sharedPreferences.getString("firstName", "");
-        //System.out.println(firstName);
         RequestTask task = new RequestTask(url, "GET");
         task.execute();
         init();
         getMenuInflater().inflate(R.menu.menu_toolbar, toolbar.getMenu());
-        textViewFirstName.setText(firstName);
-        System.out.println(restaurants.size());
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getSupportActionBar().hide();
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
@@ -92,7 +77,7 @@ public class GorillaGoActivity extends AppCompatActivity {
                         frameLayoutRestaurant.setVisibility(View.GONE);
                         frameLayoutCart.setVisibility(View.GONE);
                         recyclerViewRestaurants.setVisibility(View.VISIBLE);
-                        recyclerViewMarkets.setVisibility(View.VISIBLE);
+                        recyclerViewAllRestaurant.setVisibility(View.VISIBLE);
                         textViewRestaurants.setVisibility(View.VISIBLE);
                         textViewMarkets.setVisibility(View.VISIBLE);
                         break;
@@ -102,7 +87,7 @@ public class GorillaGoActivity extends AppCompatActivity {
                         frameLayoutRestaurant.setVisibility(View.GONE);
                         frameLayoutCart.setVisibility(View.GONE);
                         recyclerViewRestaurants.setVisibility(View.GONE);
-                        recyclerViewMarkets.setVisibility(View.GONE);
+                        recyclerViewAllRestaurant.setVisibility(View.GONE);
                         textViewRestaurants.setVisibility(View.GONE);
                         textViewMarkets.setVisibility(View.GONE);
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_account, new AccountFragment()).commit();
@@ -116,7 +101,7 @@ public class GorillaGoActivity extends AppCompatActivity {
                         frameLayoutRestaurant.setVisibility(View.GONE);
                         frameLayoutCart.setVisibility(View.GONE);
                         recyclerViewRestaurants.setVisibility(View.GONE);
-                        recyclerViewMarkets.setVisibility(View.GONE);
+                        recyclerViewAllRestaurant.setVisibility(View.GONE);
                         textViewRestaurants.setVisibility(View.GONE);
                         textViewMarkets.setVisibility(View.GONE);
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_search, new SearchFragment()).commit();
@@ -136,10 +121,14 @@ public class GorillaGoActivity extends AppCompatActivity {
                         frameLayoutRestaurant.setVisibility(View.GONE);
                         frameLayoutCart.setVisibility(View.VISIBLE);
                         recyclerViewRestaurants.setVisibility(View.GONE);
-                        recyclerViewMarkets.setVisibility(View.GONE);
+                        recyclerViewAllRestaurant.setVisibility(View.GONE);
                         textViewRestaurants.setVisibility(View.GONE);
                         textViewMarkets.setVisibility(View.GONE);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_cart, new CartFragment()).commit();
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment_container_cart, new CartFragment());
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
                         return true;
                     default:
                         return false;
@@ -147,9 +136,24 @@ public class GorillaGoActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            exitToast.cancel();
+            super.onBackPressed();
+            return;
+        } else {
+            exitToast = Toast.makeText(this, "Nyomja meg mégegyszer a kilépéshez", Toast.LENGTH_SHORT);
+            exitToast.show();
+        }
+        backPressedTime = System.currentTimeMillis();
+    }
     private void initRecyclerView() {
         restaurantAdapter = new RestaurantAdapter(restaurants);
+        allRestaurantAdapter = new AllRestaurantAdapter(restaurants);
         recyclerViewRestaurants.setAdapter(restaurantAdapter);
+        recyclerViewAllRestaurant.setAdapter(allRestaurantAdapter);
         restaurantAdapter.setRestaurantClickListener(new RestaurantAdapter.RestaurantClickListener() {
             @Override
             public void onRestaurantClick(int id) {
@@ -165,7 +169,28 @@ public class GorillaGoActivity extends AppCompatActivity {
                 frameLayoutRestaurant.setVisibility(View.VISIBLE);
                 frameLayoutCart.setVisibility(View.GONE);
                 recyclerViewRestaurants.setVisibility(View.GONE);
-                recyclerViewMarkets.setVisibility(View.GONE);
+                recyclerViewAllRestaurant.setVisibility(View.GONE);
+                textViewRestaurants.setVisibility(View.GONE);
+                textViewMarkets.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_restaurant, new RestaurantFragment()).commit();
+            }
+        });
+        allRestaurantAdapter.setAllRestaurantClickListener(new AllRestaurantAdapter.AllRestaurantClickListener() {
+            @Override
+            public void onRestaurantClick(int id) {
+                Log.d("RestaurantAdapter", "Clicked on restaurant with ID: " + id);
+                int restaurantId = id;
+                SharedPreferences sharedPreferences=getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor=sharedPreferences.edit();
+                editor.putInt("restaurantId", restaurantId);
+                editor.commit();
+                System.out.println(restaurantId);
+                frameLayoutAccount.setVisibility(View.GONE);
+                frameLayoutSearch.setVisibility(View.GONE);
+                frameLayoutRestaurant.setVisibility(View.VISIBLE);
+                frameLayoutCart.setVisibility(View.GONE);
+                recyclerViewRestaurants.setVisibility(View.GONE);
+                recyclerViewAllRestaurant.setVisibility(View.GONE);
                 textViewRestaurants.setVisibility(View.GONE);
                 textViewMarkets.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_restaurant, new RestaurantFragment()).commit();
@@ -174,10 +199,8 @@ public class GorillaGoActivity extends AppCompatActivity {
     }
     private void init() {
         recyclerViewRestaurants = findViewById(R.id.recyclerViewRestaurants);
-        recyclerViewMarkets = findViewById(R.id.recyclerViewMarkets);
+        recyclerViewAllRestaurant = findViewById(R.id.recyclerViewAllRestaurants);
         navigationView = findViewById(R.id.navigationView);
-        headerView = navigationView.getHeaderView(0);
-        textViewFirstName = headerView.findViewById(R.id.textViewFirstName);
         toolbar = findViewById(R.id.toolBar);
         frameLayoutAccount = findViewById(R.id.fragment_container_account);
         frameLayoutSearch = findViewById(R.id.fragment_container_search);
@@ -185,7 +208,7 @@ public class GorillaGoActivity extends AppCompatActivity {
         frameLayoutCart = findViewById(R.id.fragment_container_cart);
         drawerLayout = findViewById(R.id.my_drawer_layout);
         textViewRestaurants = findViewById(R.id.textViewRestaurants);
-        textViewMarkets = findViewById(R.id.textViewMarkets);
+        textViewMarkets = findViewById(R.id.textViewAllRestaurant);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.nav_open, R.string.nav_close);
         actionBarDrawerToggle.getDrawerArrowDrawable().setColor(Color.WHITE);
         alert = new AlertDialog.Builder(GorillaGoActivity.this);
@@ -200,13 +223,12 @@ public class GorillaGoActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         SharedPreferences sharedPreferences = getSharedPreferences("MyPref", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.remove("token");
-                        editor.remove("userId");
-                        editor.remove("firstName");
+                        editor.clear();
+                        editor.apply();
                         SharedPreferences sharedPreferencesCart = getSharedPreferences("shopping_cart", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor cart_editor = sharedPreferences.edit();
-                        editor.remove("cart_items");
-                        editor.commit();
+                        SharedPreferences.Editor editorCart = sharedPreferencesCart.edit();
+                        editorCart.clear();
+                        editorCart.apply();
                         startActivity(new Intent(GorillaGoActivity.this, MainActivity.class));
                         finish();
                     }

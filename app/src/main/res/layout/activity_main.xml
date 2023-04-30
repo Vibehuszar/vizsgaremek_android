@@ -9,70 +9,58 @@
     android:gravity="center"
     android:background="@drawable/bgcolor">
 
-
-
-
-    <androidx.cardview.widget.CardView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardElevation="0dp"
-        app:cardCornerRadius="20dp"
-        android:layout_margin="10dp"
-        app:cardMaxElevation="12dp"
-        app:cardPreventCornerOverlap="true"
-        app:cardUseCompatPadding="true"
-        app:cardBackgroundColor="@android:color/transparent"
-        >
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="20dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            app:cardElevation="0sp"
+            app:cardCornerRadius="20sp"
+            android:layout_margin="10sp"
+            app:cardMaxElevation="12sp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true"
+            app:cardBackgroundColor="@android:color/transparent">
 
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/gorillago"
-
-
-                />
-
-            <com.google.android.material.button.MaterialButton
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:cornerRadius="10dp"
-                android:text="Bejelentkezés"
-                android:textAllCaps="false"
-                android:textSize="16dp"
-                android:id="@+id/loginButton"
-                android:backgroundTint="@android:color/transparent"
-                app:strokeColor="@color/white"
-                app:strokeWidth="1sp"
-                />
+                android:layout_height="match_parent"
+                android:layout_margin="20sp"
+                android:orientation="vertical">
 
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:cornerRadius="10dp"
-                android:text="Regisztráció"
-                android:textAllCaps="false"
-                android:textSize="16dp"
-                android:id="@+id/registrationButton"
-                android:backgroundTint="@android:color/transparent"
-                app:strokeColor="@color/white"
-                app:strokeWidth="1sp"
-                />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/gorillago"/>
 
-        </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:cornerRadius="10sp"
+                    android:text="Bejelentkezés"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:id="@+id/loginButton"
+                    android:backgroundTint="@android:color/transparent"
+                    app:strokeColor="@color/white"
+                    app:strokeWidth="1sp"/>
 
-
-
-    </androidx.cardview.widget.CardView>
-
-
-
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:cornerRadius="10sp"
+                    android:text="Regisztráció"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:id="@+id/registrationButton"
+                    android:backgroundTint="@android:color/transparent"
+                    app:strokeColor="@color/white"
+                    app:strokeWidth="1sp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </ScrollView>
 </RelativeLayout>

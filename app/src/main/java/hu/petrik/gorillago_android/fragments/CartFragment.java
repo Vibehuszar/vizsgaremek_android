@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,17 +17,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import hu.petrik.gorillago_android.R;
 import hu.petrik.gorillago_android.classes.CartItem;
-import hu.petrik.gorillago_android.classes.MenuItem;
+
 
 public class CartFragment extends Fragment {
     private TextView textViewCart, textViewTotalPrice;
@@ -46,10 +46,32 @@ public class CartFragment extends Fragment {
         View footerView = inflater.inflate(R.layout.cart_footer, null);
         init(view);
         textViewTotalPrice = footerView.findViewById(R.id.textViewTotalPrice);
-        initListView(); // initialize listViewCart before creating the adapter
+        initListView();
         adapter = new CartAdapter();
         listViewCart.setAdapter(adapter);
         listViewCart.addFooterView(footerView);
+        Button buttonProceed = footerView.findViewById(R.id.buttonProceed);
+
+        buttonProceed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("shopping_cart", MODE_PRIVATE);
+                SharedPreferences sharedPref = getActivity().getSharedPreferences("MyPref", MODE_PRIVATE);
+                boolean canOrder = sharedPref.getBoolean("canOrder",false);
+                int totalprice = sharedPreferences.getInt("total_price", 0);
+                if (!canOrder){
+                    Toast.makeText(getActivity(), "Kérlek töltsd ki a felhasznói adataid rendelés előtt", Toast.LENGTH_SHORT).show();
+                }else if (totalprice == 0){
+                    Toast.makeText(getActivity(), "Üres a kosarad", Toast.LENGTH_SHORT).show();
+                }else{
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container_cart, new OrderAddressFragment());
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            }
+        });
         return view;
     }
 
@@ -102,8 +124,6 @@ public class CartFragment extends Fragment {
             textViewItemName.setText(actualCart.getName());
             textViewItemPrice.setText(String.valueOf(actualCart.getPricePerItem()));
             textViewItemQuantity.setText(String.valueOf(quantity));
-
-
             buttonPlus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

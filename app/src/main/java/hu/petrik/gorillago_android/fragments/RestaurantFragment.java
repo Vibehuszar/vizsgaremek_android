@@ -55,7 +55,6 @@ public class RestaurantFragment extends Fragment {
         init(view);
         return view;
     }
-
     private void init(View view){
         imageViewRestaurantImage = view.findViewById(R.id.imageViewRestaurantImage);
         textViewRestaurantName = view.findViewById(R.id.textViewRestaurantName);
@@ -66,7 +65,6 @@ public class RestaurantFragment extends Fragment {
         MenuAdapter adapter = new MenuAdapter();
         listViewMenu.setAdapter(adapter);
     }
-
     private class MenuAdapter extends ArrayAdapter<MenuItem> {
         private HashMap<MenuItem, Integer> quantityMap = new HashMap<>();
         public MenuAdapter() {
@@ -121,20 +119,27 @@ public class RestaurantFragment extends Fragment {
                     String url = actualMenu.getUrl();
                     int quantity = Integer.parseInt(textViewQuantity.getText().toString());
                     int totalPrice = actualMenu.getPrice() * quantity;
-                    if (preferences.contains(name)){
-                        String before = preferences.getString(name, null);
-                        String all[] = before.split(",");
-                        int quant = Integer.parseInt(all[0]);
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString(name, (quantity+quant) + "," + actualMenu.getPrice() + "," + url);
-                        editor.putInt("total_price", totalPrice + totalPriceCart);
-                        editor.commit();
+                    if (quantity == 0){
+
                     }else{
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString(name, quantity + "," + actualMenu.getPrice() + "," + url);
-                        editor.putInt("total_price", totalPrice + totalPriceCart);
-                        editor.commit();
+                        if (preferences.contains(name)){
+                            String before = preferences.getString(name, null);
+                            String all[] = before.split(",");
+                            int quant = Integer.parseInt(all[0]);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString(name, (quantity+quant) + "," + actualMenu.getPrice() + "," + url);
+                            editor.putInt("total_price", totalPrice + totalPriceCart);
+                            editor.commit();
+                            Toast.makeText(getActivity(), "Hozzáadva a kosárhoz", Toast.LENGTH_SHORT).show();
+                        }else{
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString(name, quantity + "," + actualMenu.getPrice() + "," + url);
+                            editor.putInt("total_price", totalPrice + totalPriceCart);
+                            editor.commit();
+                            Toast.makeText(getActivity(), "Hozzáadva a kosárhoz", Toast.LENGTH_SHORT).show();
+                        }
                     }
+
                 }
             });
             return convertView;

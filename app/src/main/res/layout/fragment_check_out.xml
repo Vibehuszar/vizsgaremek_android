@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.AccountFragment">
+    tools:context=".fragments.CheckOutFragment">
 
     <ScrollView android:layout_width="fill_parent"
         android:layout_height="fill_parent">
@@ -32,7 +32,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textViewAccount"
+                    android:id="@+id/textViewOrderAccount"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Felhasználói Adatok"
@@ -41,7 +41,6 @@
                     android:gravity="center_horizontal"/>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputLastNameLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
@@ -55,7 +54,7 @@
                     app:boxStrokeWidthFocused="0dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editTextLastName"
+                        android:id="@+id/editTextOrderLastName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
@@ -66,7 +65,6 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputFirstNameLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
@@ -80,7 +78,7 @@
                     app:boxStrokeWidthFocused="0dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editTextFirstName"
+                        android:id="@+id/editTextOrderFirstName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
@@ -91,7 +89,6 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputEmailLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
@@ -105,7 +102,7 @@
                     app:boxStrokeWidthFocused="0dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editTextEmail"
+                        android:id="@+id/editTextOrderEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
@@ -116,7 +113,6 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputPhoneNumberLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
@@ -130,12 +126,117 @@
                     app:boxStrokeWidthFocused="0dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editTextPhoneNumber"
+                        android:id="@+id/editTextOrderPhoneNumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
                         android:hint="Telefonszám"
                         android:inputType="number|phone"
+                        android:maxLines="1"
+                        android:textSize="16dp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/textViewOrderAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Checkout"
+                    android:textSize="30dp"
+                    android:textColor="@color/white"
+                    android:gravity="center_horizontal"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    app:boxBackgroundColor="@color/navbarpurple"
+                    style="@style/EditTextHintColor"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    app:boxCornerRadiusTopStart="20dp"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextStreet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:hint="Street"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textSize="16dp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    app:boxBackgroundColor="@color/navbarpurple"
+                    style="@style/EditTextHintColor"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    app:boxCornerRadiusTopStart="20dp"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextHouseNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:hint="houseNumber"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textSize="16dp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    app:boxBackgroundColor="@color/navbarpurple"
+                    style="@style/EditTextHintColor"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    app:boxCornerRadiusTopStart="20dp"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextZip"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:hint="Postal Code"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textSize="16dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    app:boxBackgroundColor="@color/navbarpurple"
+                    style="@style/EditTextHintColor"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    app:boxCornerRadiusTopStart="20dp"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextIntercom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:hint="Intercom"
+                        android:inputType="text"
                         android:maxLines="1"
                         android:textSize="16dp"/>
                 </com.google.android.material.textfield.TextInputLayout>
@@ -152,87 +253,7 @@
                     app:cornerRadius="10dp"
                     app:strokeColor="@color/navbarpurple"
                     app:strokeWidth="1sp" />
-
-                <TextView
-                    android:id="@+id/textViewPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Jelszóváltoztatás"
-                    android:textSize="30dp"
-                    android:textColor="@color/white"
-                    android:gravity="center_horizontal"/>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    app:boxBackgroundColor="@color/navbarpurple"
-                    style="@style/EditTextHintColor"
-                    app:boxCornerRadiusBottomEnd="20dp"
-                    app:boxCornerRadiusBottomStart="20dp"
-                    app:boxCornerRadiusTopEnd="20dp"
-                    app:boxCornerRadiusTopStart="20dp"
-                    app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp"
-                    app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@color/white">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editTextOldPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:hint="Meglévő jelszó"
-                        android:inputType="textPassword"
-                        android:maxLines="1"
-                        android:textSize="16dp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:id="@+id/textInputNewPasswordLayout"
-                    app:boxBackgroundColor="@color/navbarpurple"
-                    style="@style/EditTextHintColor"
-                    app:boxCornerRadiusBottomEnd="20dp"
-                    app:boxCornerRadiusBottomStart="20dp"
-                    app:boxCornerRadiusTopEnd="20dp"
-                    app:boxCornerRadiusTopStart="20dp"
-                    app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp"
-                    app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@color/white"
-                    app:errorEnabled="true">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editTextNewPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:hint="Új jelszó"
-                        android:inputType="textPassword"
-                        android:maxLines="1"
-                        android:textSize="16dp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/buttonSavePassword"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:backgroundTint="@android:color/transparent"
-                    android:text="Mentés"
-                    android:textAllCaps="false"
-                    android:textSize="16dp"
-                    app:cornerRadius="10dp"
-                    app:strokeColor="@color/navbarpurple"
-                    app:strokeWidth="1sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
     </ScrollView>
-
-
 </FrameLayout>
